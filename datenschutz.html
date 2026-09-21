@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Datenschutzerklärung – Berit Weise, Bobingen</title>
+<meta name="description" content="Datenschutzerklärung von Berit Weise, Praxis für Psychotherapie und ganzheitliche Gesundheit in Bobingen."/>
+<style>
+/* ============================================================
+   BERIT WEISE – Shared Styles
+   ============================================================ */
+:root {
+  --cream: #f7f3ec;
+  --paper: #fffdf8;
+  --sage: #6f7b59;
+  --sage-dark: #4f5f3f;
+  --red: #a93b35;
+  --gold: #c9a646;
+  --gold-2: #a9872f;
+  --ink: #232323;
+  --muted: #716b61;
+  --line: #e5dbca;
+  --shadow: 0 18px 45px rgba(73,55,34,.12);
+  --radius: 24px;
+}
+
+* { box-sizing: border-box }
+html { scroll-behavior: smooth }
+body { margin: 0; font-family: Inter, Arial, sans-serif; color: var(--ink); background: var(--paper); line-height: 1.6 }
+h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; font-weight: 500; line-height: 1.1; margin: 0; color: #1e1e1e }
+h1 { font-size: clamp(2.4rem, 5vw, 5rem); letter-spacing: -.03em }
+h2 { font-size: clamp(1.7rem, 2.8vw, 3rem); letter-spacing: -.02em }
+h3 { font-size: clamp(1.2rem, 1.7vw, 1.65rem) }
+p { margin: 0; color: #47433c }
+a { text-decoration: none; color: inherit }
+img { display: block; max-width: 100% }
+.container { width: min(1180px, 92%); margin: auto }
+.eyebrow { color: var(--red); font-weight: 800; text-transform: uppercase; letter-spacing: .13em; font-size: .78rem; margin-bottom: .9rem }
+.kicker { max-width: 640px; margin: .9rem auto 0; color: var(--muted); font-size: 1.05rem }
+.text-center { text-align: center }
+.text-center .kicker { text-align: center }
+
+/* ---- Buttons ---- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; border-radius: 999px; padding: .85rem 1.5rem; font-weight: 700; border: 1px solid transparent; transition: .2s ease; white-space: nowrap; font-size: .97rem; cursor: pointer }
+.btn.primary { background: var(--red); color: #fff; box-shadow: 0 10px 24px rgba(169,59,53,.2) }
+.btn.secondary { background: rgba(255,255,255,.75); border-color: #bfae92; color: #5b4730 }
+.btn.ghost { background: transparent; border-color: rgba(255,255,255,.55); color: #fff }
+.btn.sage { background: var(--sage-dark); color: #fff }
+.btn:hover { transform: translateY(-2px) }
+
+/* ---- Badges / Icons ---- */
+.leaf-badge { width: 64px; height: 64px; border-radius: 999px; background: #fbf8f2; border: 1px solid #e6d9c6; display: grid; place-items: center; color: var(--sage-dark); box-shadow: 0 8px 20px rgba(92,68,40,.08); flex-shrink: 0 }
+.leaf-badge svg { width: 30px; height: 30px; fill: currentColor }
+.mini-badge { width: 44px; height: 44px; border-radius: 999px; background: #f4efe7; display: grid; place-items: center; color: var(--sage-dark); flex-shrink: 0 }
+.mini-badge svg { width: 20px; height: 20px; fill: currentColor }
+
+/* ---- Shared header ---- */
+header { position: sticky; top: 0; z-index: 50; background: rgba(255,253,248,.92); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(229,219,202,.65) }
+.nav { height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem }
+.logo { display: flex; align-items: center; gap: .65rem }
+.logo img.symbol { width: 40px; height: 40px; object-fit: contain }
+.logo img.word { height: 34px; width: auto }
+.menu { display: flex; align-items: center; gap: .25rem; font-size: .93rem; font-weight: 650; position: relative }
+.menu > a { padding: .45rem .75rem; border-radius: 8px; transition: background .15s }
+.menu > a:hover, .menu > a.active { background: #f0ebe2; color: var(--red) }
+.dropdown { position: relative }
+.dropdown > a { display: flex; align-items: center; gap: .3rem; padding: .45rem .75rem; border-radius: 8px; transition: background .15s; cursor: default }
+.dropdown > a:hover { background: #f0ebe2 }
+.dropdown-panel { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 20px 50px rgba(50,40,25,.13); min-width: 220px; padding: 10px; z-index: 100 }
+.dropdown:hover .dropdown-panel { display: flex; flex-direction: column; gap: 2px }
+.dropdown-panel a { padding: 10px 14px; border-radius: 10px; font-size: .92rem; color: var(--ink); display: flex; align-items: center; gap: 10px }
+.dropdown-panel a:hover { background: #f7f3ec; color: var(--red) }
+.dropdown-panel a svg { width: 16px; height: 16px; fill: var(--sage); flex-shrink: 0 }
+.caret { width: 14px; height: 14px; fill: currentColor; opacity: .55 }
+
+/* ---- Sections ---- */
+section { padding: 80px 0 }
+
+/* ---- Prose content ---- */
+.prose { max-width: 780px }
+.prose p { margin-top: 1rem; font-size: 1.02rem; line-height: 1.75 }
+.prose p:first-child { margin-top: 0 }
+.prose h2 { margin-top: 3rem; font-size: 1.6rem }
+.prose h2:first-of-type { margin-top: 0 }
+.prose h3 { margin-top: 2rem; margin-bottom: .5rem; font-size: 1.15rem }
+.prose ul { margin: 1rem 0; padding-left: 1.2rem; color: #47433c }
+.prose li { margin: .3rem 0; font-size: 1.02rem; line-height: 1.6 }
+.prose a { color: var(--red); text-decoration: underline; word-break: break-word }
+
+/* ---- Inner hero (subpages) ---- */
+.inner-hero { background: radial-gradient(circle at 80% 40%, rgba(111,123,89,.14), transparent 50%), linear-gradient(100deg, #fbf8f1 0%, #f4efe5 100%); padding: 70px 0 60px; position: relative; overflow: hidden }
+.inner-hero::before { content: ""; position: absolute; right: -60px; bottom: -60px; width: 360px; height: 360px; background: url('symbol-gold.png') center/contain no-repeat; opacity: .06; pointer-events: none }
+.inner-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem) }
+
+/* ---- Footer ---- */
+footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0 22px; margin-top: 0 }
+.foot-grid { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 28px }
+.foot-grid img { width: 140px; margin-bottom: 10px }
+.foot-grid p { font-size: .92rem; margin-top: .4rem }
+.foot-grid h4 { font-family: inherit; font-size: .85rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: #9a8e82; margin: 0 0 .8rem }
+.foot-grid a { color: inherit; display: block; margin-top: .35rem; font-size: .92rem }
+.foot-grid a:hover { color: var(--red) }
+.legal { border-top: 1px solid #dfd2c0; margin-top: 30px; padding-top: 18px; display: flex; justify-content: space-between; color: #756c61; font-size: .85rem; flex-wrap: wrap; gap: .5rem }
+.legal a { color: inherit }
+.legal a:hover { color: var(--red) }
+
+/* ---- Responsive ---- */
+@media (max-width: 960px) {
+  .foot-grid { grid-template-columns: 1fr 1fr }
+}
+@media (max-width: 640px) {
+  header .menu { display: none }
+  h1 { font-size: 2.2rem }
+  .inner-hero { padding: 44px 0 40px }
+  .foot-grid { grid-template-columns: 1fr }
+  section { padding: 48px 0 }
+}
+
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="ico-leaf"     viewBox="0 0 24 24"><path d="M20 4C11 4 4 11 4 20c9 0 16-7 16-16zM6 20c0-1.5.2-3 .6-4.3C10 17 12 19 13 21.4 10.6 21.9 8.1 21.4 6 20z"/></symbol>
+  <symbol id="ico-heart"    viewBox="0 0 24 24"><path d="M12 21s-7.3-4.6-10-9C.4 8.6 2 4 6 4c2.1 0 3.7 1.2 4.5 2.6C11.3 5.2 12.9 4 15 4c4 0 5.6 4.6 4 8-2.7 4.4-7 9-7 9z"/></symbol>
+  <symbol id="ico-feet"     viewBox="0 0 24 24"><path d="M8 3a3 3 0 013 3c0 2-1.5 3-1.5 5s1 3 1 4a2.5 2.5 0 01-5 0c0-2 1.5-2.5 1.5-5S5 8 5 6a3 3 0 013-3zm8 6a3 3 0 013 3c0 2-1.5 3-1.5 5s1 3 1 4a2.5 2.5 0 01-5 0c0-2 1.5-2.5 1.5-5s-1.5-2-1.5-4a3 3 0 013-3z"/></symbol>
+  <symbol id="ico-walk"     viewBox="0 0 24 24"><path d="M13 3.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM9.3 7l-2.8 4.5 1.7 1 1.8-2.9v3.9l-3 4.5 1.7 1.1 2.5-3.7 2.5 3.7 1.7-1.1-3-4.5V9.6l1.8 2.9 1.7-1L13 7H9.3z"/></symbol>
+  <symbol id="ico-apple"    viewBox="0 0 24 24"><path d="M12.5 5c.3-1.5 1.5-2.5 3-2.5-.1 1.6-1.3 2.9-3 2.5zm-1 2c1.7-.3 3.4.3 4.6 1.5 2.2 2.2 2.2 6-.4 9.6-1 1.4-2.1 2.4-3.2 2.4s-1.6-.6-2.5-.6-1.6.6-2.6.6-2.4-1.2-3.5-2.9C1.9 14.4 2 10.3 4.6 8.2 6 7 7.7 6.6 9.3 7c.7.2 1.4.4 2.2 0z"/></symbol>
+  <symbol id="ico-caret"    viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+</svg>
+
+<header>
+  <div class="container nav">
+    <a class="logo" href="index.html" aria-label="Startseite">
+      <img class="symbol" src="symbol-gold.png" alt="">
+      <img class="word"   src="logo-beritweise.png" alt="Berit Weise – Praxis ganzheitliche Weise">
+    </a>
+    <nav class="menu" aria-label="Hauptnavigation">
+      <div class="dropdown">
+        <a>Leistungen <svg class="caret"><use href="#ico-caret"/></svg></a>
+        <div class="dropdown-panel">
+          <a href="psychotherapie.html"><svg><use href="#ico-heart"/></svg> Psychotherapie Erwachsene</a>
+          <a href="kinder-jugendliche.html"><svg><use href="#ico-feet"/></svg> Kinder &amp; Jugendliche</a>
+          <a href="walk-talk.html"><svg><use href="#ico-walk"/></svg> Walk &amp; Talk</a>
+          <a href="gesundheit.html"><svg><use href="#ico-apple"/></svg> Ganzheitliche Gesundheit</a>
+        </div>
+      </div>
+      <a href="ueber-mich.html">Über mich</a>
+      <a href="index.html#tools">Selbsttests</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+    <a class="btn primary" href="kontakt.html">Termin vereinbaren</a>
+  </div>
+</header>
+
+<main>
+
+  <section class="inner-hero" style="padding-bottom:0">
+    <div class="container">
+      <div class="eyebrow">Rechtliches</div>
+      <h1>Datenschutzerklärung</h1>
+    </div>
+  </section>
+
+  <section>
+    <div class="container prose">
+
+      <h2>Datenschutz auf einen Blick</h2>
+
+      <h3>Allgemeine Hinweise</h3>
+      <p>Die folgenden Hinweise geben dir einen einfachen Überblick darüber, was mit deinen personenbezogenen Daten passiert, wenn du meine Website besuchst. Personenbezogene Daten sind alle Daten, mit denen du persönlich identifiziert werden kannst. Ausführliche Informationen zum Thema Datenschutz findest du in der unter diesem Text aufgeführten Datenschutzerklärung.</p>
+
+      <h3>Datenerfassung auf meiner Website</h3>
+      <p><b>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</b><br>Die Datenverarbeitung auf dieser Website erfolgt durch mich als Websitebetreiberin. Meine Kontaktdaten findest du im Abschnitt „Hinweis zur verantwortlichen Stelle" in dieser Datenschutzerklärung.</p>
+      <p><b>Wie erfasse ich deine Daten?</b><br>Deine Daten werden zum einen dadurch erhoben, dass du sie mir mitteilst. Hierbei kann es sich z. B. um Daten handeln, die du in ein Kontaktformular eingibst.<br>Andere Daten werden automatisch oder nach deiner Einwilligung beim Besuch der Website durch meine IT-Systeme erfasst. Das sind vor allem technische Daten (z. B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs). Die Erfassung dieser Daten erfolgt automatisch, sobald du diese Website betrittst.</p>
+      <p><b>Wofür nutze ich deine Daten?</b><br>Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung meiner Website zu gewährleisten. Andere Daten können zur Analyse deines Nutzerverhaltens verwendet werden. Sofern über die Website Verträge geschlossen oder angebahnt werden können, werden die übermittelten Daten außerdem für Vertragsangebote, Bestellungen oder sonstige Auftragsanfragen verarbeitet.</p>
+      <p><b>Welche Rechte hast du bezüglich deiner Daten?</b><br>Du hast jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck deiner gespeicherten personenbezogenen Daten zu erhalten. Außerdem hast du das Recht, die Berichtigung oder Löschung dieser Daten zu verlangen. Wenn du eine Einwilligung zur Datenverarbeitung erteilt hast, kannst du diese jederzeit für die Zukunft widerrufen. Darüber hinaus hast du das Recht, unter bestimmten Umständen die Einschränkung der Verarbeitung deiner personenbezogenen Daten zu verlangen. Außerdem steht dir ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu.<br>Hierzu sowie zu weiteren Fragen zum Thema Datenschutz kannst du dich jederzeit an mich wenden.</p>
+
+      <h2>2. Hosting</h2>
+      <p>Ich hoste die Inhalte meiner Website bei folgendem Anbieter:</p>
+      <h3>IONOS</h3>
+      <p>Anbieter ist die IONOS SE, Elgendorfer Str. 57, 56410 Montabaur (nachfolgend IONOS). Wenn du meine Website besuchst, erfasst IONOS verschiedene Logfiles inklusive deiner IP-Adressen. Details findest du in der Datenschutzerklärung von IONOS: <a href="https://www.ionos.de/terms-gtc/terms-privacy" target="_blank" rel="noopener">https://www.ionos.de/terms-gtc/terms-privacy</a>.</p>
+      <p>Die Verwendung von IONOS erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Ich habe ein berechtigtes Interesse an einer möglichst zuverlässigen Darstellung meiner Website. Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen in deinem Endgerät (z. B. Device-Fingerprinting) umfasst. Die Einwilligung ist jederzeit widerrufbar.</p>
+      <h3>Auftragsverarbeitung</h3>
+      <p>Ich habe einen Vertrag über Auftragsverarbeitung (AVV) zur Nutzung des oben genannten Dienstes geschlossen. Hierbei handelt es sich um einen datenschutzrechtlich vorgeschriebenen Vertrag, der gewährleistet, dass personenbezogene Daten meiner Websitebesucher nur nach meinen Weisungen und unter Einhaltung der DSGVO verarbeitet werden.</p>
+
+      <h2>3. Allgemeine Hinweise und Pflichtinformationen</h2>
+      <h3>Datenschutz</h3>
+      <p>Der Schutz deiner persönlichen Daten ist mir sehr wichtig. Ich behandle deine personenbezogenen Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.</p>
+      <p>Wenn du diese Website benutzt, werden verschiedene personenbezogene Daten erhoben. Personenbezogene Daten sind Daten, mit denen du persönlich identifiziert werden kannst. Diese Datenschutzerklärung erläutert, welche Daten ich erhebe und wofür ich sie nutze. Sie erklärt auch, wie und zu welchem Zweck das geschieht.</p>
+      <p>Ich weise darauf hin, dass die Datenübertragung im Internet (z. B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.</p>
+
+      <h3>Hinweis zur verantwortlichen Stelle</h3>
+      <p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website bin ich:</p>
+      <p>Berit Weise<br>Hochstraße 15<br>86399 Bobingen</p>
+      <p>Telefon: 08234 99 84 58 7<br>E-Mail: <a href="mailto:hallo@berit-weise.de">hallo@berit-weise.de</a></p>
+      <p>Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten entscheidet.</p>
+
+      <h3>Speicherdauer</h3>
+      <p>Soweit innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde, verbleiben deine personenbezogenen Daten bei mir, bis der Zweck für die Datenverarbeitung entfällt. Wenn du ein berechtigtes Löschersuchen geltend machst oder eine Einwilligung zur Datenverarbeitung widerrufst, werden deine Daten gelöscht, sofern ich keine anderen rechtlich zulässigen Gründe für die Speicherung deiner personenbezogenen Daten habe (z. B. steuer- oder handelsrechtliche Aufbewahrungsfristen). Im letztgenannten Fall erfolgt die Löschung nach Fortfall dieser Gründe.</p>
+
+      <h3>Allgemeine Hinweise zu den Rechtsgrundlagen der Datenverarbeitung auf dieser Website</h3>
+      <p>Sofern du in die Datenverarbeitung eingewilligt hast, verarbeite ich deine personenbezogenen Daten auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO bzw. Art. 9 Abs. 2 lit. a DSGVO, sofern besondere Datenkategorien verarbeitet werden. Im Falle einer ausdrücklichen Einwilligung in die Übertragung personenbezogener Daten in Drittstaaten erfolgt die Datenverarbeitung außerdem auf Grundlage von Art. 49 Abs. 1 lit. a DSGVO.</p>
+      <p>Sofern du in die Speicherung von Cookies oder in den Zugriff auf Informationen in dein Endgerät eingewilligt hast, erfolgt die Datenverarbeitung zusätzlich auf Grundlage von § 25 Abs. 1 TDDDG. Die Einwilligung ist jederzeit widerrufbar.</p>
+      <p>Sind deine Daten zur Vertragserfüllung oder zur Durchführung vorvertraglicher Maßnahmen erforderlich, verarbeite ich deine Daten auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO. Des Weiteren verarbeite ich deine Daten, sofern diese zur Erfüllung einer rechtlichen Verpflichtung erforderlich sind, auf Grundlage von Art. 6 Abs. 1 lit. c DSGVO. Die Datenverarbeitung kann ferner auf Grundlage meines berechtigten Interesses nach Art. 6 Abs. 1 lit. f DSGVO erfolgen.</p>
+      <p>Über die jeweils im Einzelfall einschlägigen Rechtsgrundlagen informiere ich in den folgenden Abschnitten dieser Datenschutzerklärung.</p>
+
+      <h3>Empfänger von personenbezogenen Daten</h3>
+      <p>Im Rahmen meiner Geschäftstätigkeit arbeite ich mit verschiedenen externen Stellen zusammen. Dabei ist teilweise auch eine Übermittlung personenbezogener Daten an diese externen Stellen erforderlich. Ich gebe personenbezogene Daten nur dann an externe Stellen weiter, wenn dies im Rahmen einer Vertragserfüllung erforderlich ist, wenn ich gesetzlich hierzu verpflichtet bin, wenn ich ein berechtigtes Interesse nach Art. 6 Abs. 1 lit. f DSGVO an der Weitergabe habe oder wenn eine sonstige Rechtsgrundlage die Datenweitergabe erlaubt.</p>
+      <p>Beim Einsatz von Auftragsverarbeitern gebe ich personenbezogene Daten meiner Kund:innen nur auf Grundlage eines gültigen Vertrags über Auftragsverarbeitung weiter. Im Falle einer gemeinsamen Verarbeitung wird ein Vertrag über gemeinsame Verarbeitung geschlossen.</p>
+
+      <h3>Widerruf deiner Einwilligung zur Datenverarbeitung</h3>
+      <p>Viele Datenverarbeitungsvorgänge sind nur mit deiner ausdrücklichen Einwilligung möglich. Du kannst eine bereits erteilte Einwilligung jederzeit widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Datenverarbeitung bleibt vom Widerruf unberührt.</p>
+
+      <h3>Widerspruchsrecht gegen die Datenerhebung in besonderen Fällen sowie gegen Direktwerbung (Art. 21 DSGVO)</h3>
+      <p>Wenn die Datenverarbeitung auf Grundlage von Art. 6 Abs. 1 lit. e oder f DSGVO erfolgt, hast du jederzeit das Recht, aus Gründen, die sich aus deiner besonderen Situation ergeben, gegen die Verarbeitung deiner personenbezogenen Daten Widerspruch einzulegen.</p>
+      <p>Werden deine personenbezogenen Daten verarbeitet, um Direktwerbung zu betreiben, hast du das Recht, jederzeit Widerspruch gegen die Verarbeitung deiner personenbezogenen Daten zum Zwecke derartiger Werbung einzulegen.</p>
+
+      <h3>Beschwerderecht bei der zuständigen Aufsichtsbehörde</h3>
+      <p>Im Falle von Verstößen gegen die DSGVO steht dir ein Beschwerderecht bei einer Aufsichtsbehörde zu.</p>
+
+      <h3>Recht auf Datenübertragbarkeit</h3>
+      <p>Du hast das Recht, Daten, die ich auf Grundlage deiner Einwilligung oder in Erfüllung eines Vertrags automatisiert verarbeite, an dich oder an einen Dritten in einem gängigen, maschinenlesbaren Format aushändigen zu lassen.</p>
+
+      <h3>Auskunft, Berichtigung und Löschung</h3>
+      <p>Du hast im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf unentgeltliche Auskunft über deine gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger sowie den Zweck der Datenverarbeitung und gegebenenfalls ein Recht auf Berichtigung oder Löschung dieser Daten.</p>
+
+      <h3>Recht auf Einschränkung der Verarbeitung</h3>
+      <p>Du hast das Recht, die Einschränkung der Verarbeitung deiner personenbezogenen Daten zu verlangen.</p>
+
+      <h2>4. Datenerfassung auf dieser Website</h2>
+      <h3>Server-Log-Dateien</h3>
+      <p>Der Provider meiner Seiten erhebt und speichert automatisch Informationen in sogenannten Server-Log-Dateien, die dein Browser automatisch an mich übermittelt. Dies sind:</p>
+      <ul>
+        <li>Browsertyp und Browserversion</li>
+        <li>verwendetes Betriebssystem</li>
+        <li>Referrer URL</li>
+        <li>Hostname des zugreifenden Rechners</li>
+        <li>Uhrzeit der Serveranfrage</li>
+        <li>IP-Adresse</li>
+      </ul>
+      <p>Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen.</p>
+
+      <h3>Kontaktformular</h3>
+      <p>Wenn du mir per Kontaktformular Anfragen zukommen lässt, werden deine Angaben aus dem Anfrageformular inklusive der von dir dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei mir gespeichert.</p>
+
+      <h3>Anfrage per E-Mail, Telefon oder Telefax</h3>
+      <p>Wenn du mich per E-Mail, Telefon oder Telefax kontaktierst, wird deine Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten zum Zwecke der Bearbeitung deines Anliegens bei mir gespeichert und verarbeitet.</p>
+
+      <h3>Kommunikation via WhatsApp</h3>
+      <p>Für die Kommunikation mit Kund:innen und Interessierten nutze ich unter anderem WhatsApp.</p>
+      <p>Die Kommunikation erfolgt über eine Ende-zu-Ende-Verschlüsselung. Ich weise jedoch darauf hin, dass WhatsApp Metadaten verarbeitet und personenbezogene Daten mit seiner Konzernmutter Meta teilen kann.</p>
+      <p>Bitte sende mir über WhatsApp keine sensiblen Gesundheitsdaten, da trotz Verschlüsselung nicht ausgeschlossen werden kann, dass Dritte Zugriff auf Metadaten erhalten.</p>
+      <p>Weitere Informationen findest du hier: <a href="https://www.whatsapp.com/legal/#privacy-policy" target="_blank" rel="noopener">https://www.whatsapp.com/legal/#privacy-policy</a></p>
+
+      <h2>5. Plugins und Tools</h2>
+      <h3>Google Fonts (lokales Hosting)</h3>
+      <p>Diese Seite nutzt zur einheitlichen Darstellung von Schriftarten sogenannte Google Fonts, die lokal installiert sind. Eine Verbindung zu Servern von Google findet dabei nicht statt.</p>
+      <p>Weitere Informationen findest du unter: <a href="https://developers.google.com/fonts/faq" target="_blank" rel="noopener">https://developers.google.com/fonts/faq</a><br>und in der Datenschutzerklärung von Google: <a href="https://policies.google.com/privacy?hl=de" target="_blank" rel="noopener">https://policies.google.com/privacy?hl=de</a></p>
+
+      <h2>6. eCommerce und Zahlungsanbieter</h2>
+      <h3>Verarbeiten von Kunden- und Vertragsdaten</h3>
+      <p>Ich erhebe, verarbeite und nutze personenbezogene Kunden- und Vertragsdaten zur Begründung, inhaltlichen Ausgestaltung und Änderung meiner Vertragsbeziehungen.</p>
+      <p>Die erhobenen Kundendaten werden nach Abschluss des Auftrags oder Beendigung der Geschäftsbeziehung und Ablauf der gesetzlichen Aufbewahrungsfristen gelöscht. Gesetzliche Aufbewahrungsfristen bleiben unberührt.</p>
+
+      <h2>7. Verarbeitung von Gesundheitsdaten</h2>
+      <p>Im Rahmen meiner Tätigkeit als Heilpraktikerin verarbeite ich Gesundheitsdaten. Dabei handelt es sich um besondere personenbezogene Daten gemäß Art. 9 DSGVO. Die Verarbeitung erfolgt ausschließlich zum Zweck der Behandlung, Beratung und Dokumentation und nur auf Grundlage deiner ausdrücklichen Einwilligung oder gesetzlicher Erlaubnistatbestände.</p>
+      <p>Ich bin gesetzlich verpflichtet, Behandlungsdokumentationen für einen bestimmten Zeitraum aufzubewahren. Die Aufbewahrung erfolgt entsprechend der gesetzlichen Vorgaben.</p>
+
+      <h2>8. Meine Social-Media-Auftritte</h2>
+      <p>Diese Datenschutzerklärung gilt für folgende Social-Media-Auftritte:<br><a href="https://www.instagram.com/ganzheitlicheweise/" target="_blank" rel="noopener">https://www.instagram.com/ganzheitlicheweise/</a></p>
+
+      <h3>Datenverarbeitung durch soziale Netzwerke</h3>
+      <p>Ich unterhalte öffentlich zugängliche Profile in sozialen Netzwerken. Die von mir genutzten sozialen Netzwerke findest du weiter unten.</p>
+      <p>Soziale Netzwerke wie Facebook, X etc. können dein Nutzerverhalten in der Regel umfassend analysieren, wenn du deren Website oder eine Website mit integrierten Social-Media-Inhalten (z. B. Like-Buttons oder Werbebannern) besuchst. Durch den Besuch meiner Social-Media-Präsenzen werden zahlreiche datenschutzrelevante Verarbeitungsvorgänge ausgelöst.</p>
+      <p>Wenn du in deinem Social-Media-Account eingeloggt bist und meine Social-Media-Präsenz besuchst, kann der Betreiber des Social-Media-Portals diesen Besuch deinem Benutzerkonto zuordnen. Deine personenbezogenen Daten können unter Umständen aber auch dann erfasst werden, wenn du nicht eingeloggt bist oder keinen Account beim jeweiligen Social-Media-Portal besitzt. Diese Datenerfassung erfolgt in diesem Fall beispielsweise über Cookies, die auf deinem Endgerät gespeichert werden, oder durch die Erfassung deiner IP-Adresse.</p>
+      <p>Mit Hilfe der so erfassten Daten können die Betreiber der Social-Media-Portale Nutzerprofile erstellen, in denen deine Präferenzen und Interessen hinterlegt sind. Auf diese Weise kann dir interessenbezogene Werbung innerhalb und außerhalb der jeweiligen Social-Media-Präsenz angezeigt werden. Sofern du über einen Account beim jeweiligen sozialen Netzwerk verfügst, kann die interessenbezogene Werbung auf allen Geräten angezeigt werden, auf denen du eingeloggt bist oder eingeloggt warst.</p>
+      <p>Bitte beachte außerdem, dass ich nicht alle Verarbeitungsprozesse auf den Social-Media-Portalen nachvollziehen kann. Je nach Anbieter können daher gegebenenfalls weitere Verarbeitungsvorgänge von den Betreibern der Social-Media-Portale durchgeführt werden. Details hierzu findest du in den Nutzungsbedingungen und Datenschutzbestimmungen der jeweiligen Social-Media-Portale.</p>
+
+      <h3>Rechtsgrundlage</h3>
+      <p>Meine Social-Media-Auftritte sollen eine möglichst umfassende Präsenz im Internet gewährleisten. Hierbei handelt es sich um ein berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO. Die von den sozialen Netzwerken initiierten Analyseprozesse beruhen gegebenenfalls auf abweichenden Rechtsgrundlagen, die von den Betreibern der sozialen Netzwerke anzugeben sind (z. B. Einwilligung im Sinne des Art. 6 Abs. 1 lit. a DSGVO).</p>
+
+      <h3>Verantwortliche und Geltendmachung von Rechten</h3>
+      <p>Wenn du einen meiner Social-Media-Auftritte besuchst, bin ich gemeinsam mit dem Betreiber der jeweiligen Social-Media-Plattform für die bei diesem Besuch ausgelösten Datenverarbeitungsvorgänge verantwortlich. Du kannst deine Rechte (Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Beschwerde) grundsätzlich sowohl gegenüber mir als auch gegenüber dem Betreiber des jeweiligen Social-Media-Portals geltend machen.</p>
+      <p>Bitte beachte, dass ich trotz der gemeinsamen Verantwortlichkeit mit den Social-Media-Portal-Betreibern nicht vollumfänglich Einfluss auf die Datenverarbeitungsvorgänge der Social-Media-Portale habe. Meine Möglichkeiten richten sich maßgeblich nach der Unternehmenspolitik des jeweiligen Anbieters.</p>
+
+      <h3>Speicherdauer</h3>
+      <p>Die unmittelbar von mir über die Social-Media-Präsenz erfassten Daten werden von meinen Systemen gelöscht, sobald du mich zur Löschung aufforderst, deine Einwilligung zur Speicherung widerrufst oder der Zweck für die Datenspeicherung entfällt. Gespeicherte Cookies verbleiben auf deinem Endgerät, bis du sie löschst. Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.</p>
+      <p>Auf die Speicherdauer deiner Daten, die von den Betreibern der sozialen Netzwerke zu eigenen Zwecken gespeichert werden, habe ich keinen Einfluss. Für Einzelheiten informiere dich bitte direkt bei den Betreibern der sozialen Netzwerke (z. B. in deren Datenschutzerklärung, siehe unten).</p>
+
+      <h3>Deine Rechte</h3>
+      <p>Du hast jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck deiner gespeicherten personenbezogenen Daten zu erhalten. Außerdem hast du ein Recht auf Widerspruch, auf Datenübertragbarkeit und ein Beschwerderecht bei der zuständigen Aufsichtsbehörde. Darüber hinaus kannst du die Berichtigung, Sperrung, Löschung und unter bestimmten Umständen die Einschränkung der Verarbeitung deiner personenbezogenen Daten verlangen.</p>
+
+      <h3>Soziale Netzwerke im Einzelnen</h3>
+      <p><b>Instagram</b><br>Ich verfüge über ein Profil bei Instagram. Anbieter dieses Dienstes ist die Meta Platforms Ireland Limited, Merrion Road, Dublin 4, D04 X2K5, Irland.</p>
+      <p>Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der EU-Kommission gestützt. Details findest du hier:<br><a href="https://www.facebook.com/legal/EU_data_transfer_addendum" target="_blank" rel="noopener">https://www.facebook.com/legal/EU_data_transfer_addendum</a><br><a href="https://de-de.facebook.com/help/566994660333381" target="_blank" rel="noopener">https://de-de.facebook.com/help/566994660333381</a></p>
+      <p>Details zum Umgang mit deinen personenbezogenen Daten findest du in der Datenschutzerklärung von Instagram:<br><a href="https://privacycenter.instagram.com/policy" target="_blank" rel="noopener">https://privacycenter.instagram.com/policy</a></p>
+      <p>Das Unternehmen verfügt über eine Zertifizierung nach dem „EU-US Data Privacy Framework" (DPF). Der DPF ist ein Übereinkommen zwischen der Europäischen Union und den USA, das die Einhaltung europäischer Datenschutzstandards bei Datenverarbeitungen in den USA gewährleisten soll. Jedes nach dem DPF zertifizierte Unternehmen verpflichtet sich, diese Datenschutzstandards einzuhalten. Weitere Informationen hierzu findest du unter folgendem Link:<br><a href="https://www.dataprivacyframework.gov/participant/4452" target="_blank" rel="noopener">https://www.dataprivacyframework.gov/participant/4452</a></p>
+
+    </div>
+  </section>
+
+</main>
+
+<footer id="datenschutz-footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <img src="logo-beritweise.png" alt="Berit Weise Logo">
+        <p>Psychotherapeutische Begleitung mit Herz, Verstand und einem ganzheitlichen Blick.</p>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <a href="tel:+4982399845877">08234 – 99 84 58 7</a>
+        <a href="mailto:hallo@berit-weise.de">hallo@berit-weise.de</a>
+      </div>
+      <div>
+        <h4>Praxis</h4>
+        <p>Hochstraße 15<br>86399 Bobingen</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <a href="index.html">Startseite</a>
+        <a href="psychotherapie.html">Psychotherapie</a>
+        <a href="kinder-jugendliche.html">Kinder &amp; Jugendliche</a>
+        <a href="walk-talk.html">Walk &amp; Talk</a>
+        <a href="gesundheit.html">Gesundheit &amp; Ernährung</a>
+        <a href="ueber-mich.html">Über mich</a>
+        <a href="kontakt.html">Kontakt</a>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© Berit Weise – Praxis ganzheitliche Weise</span>
+      <span><a href="#">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
