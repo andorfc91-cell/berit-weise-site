@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welche Begleitung passt zu mir?</title>
+<style>
+  :root{
+    --cream:#FBF6EE;
+    --paper:#FFFFFF;
+    --ink:#3A332B;
+    --ink-soft:#6E6258;
+    --gold:#C7973F;
+    --gold-soft:#EFDFC0;
+    --maroon:#7A2E27;
+    --maroon-soft:#F3E2DF;
+    --green:#5C7A5E;
+    --green-soft:#E3ECE2;
+    --line:#E8DFCF;
+    --radius:18px;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    font-family:'Iowan Old Style','Georgia',serif;
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .sans{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  }
+
+  .wrap{
+    max-width:600px;
+    margin:0 auto;
+    padding:32px 20px 48px;
+    position:relative;
+    min-height:100vh;
+  }
+
+  .breath{
+    position:absolute;
+    top:18px;
+    right:18px;
+    width:54px;
+    height:54px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, var(--gold-soft), var(--gold) 80%);
+    opacity:0.55;
+    animation:breathe 6s ease-in-out infinite;
+    z-index:0;
+  }
+  @keyframes breathe{
+    0%,100%{ transform:scale(1); opacity:.45; }
+    50%{ transform:scale(1.35); opacity:.7; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .breath{ animation:none; }
+  }
+
+  header{
+    position:relative;
+    z-index:1;
+    padding-bottom:8px;
+  }
+
+  .eyebrow{
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 10px;
+    font-weight:600;
+  }
+
+  h1{
+    font-size:28px;
+    line-height:1.25;
+    margin:0 0 10px;
+    font-weight:600;
+    max-width:85%;
+  }
+
+  .lede{
+    color:var(--ink-soft);
+    font-size:16px;
+    line-height:1.6;
+    margin:0 0 28px;
+    max-width:48ch;
+  }
+
+  .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:28px 24px;
+    box-shadow:0 1px 2px rgba(58,51,43,0.03);
+    position:relative;
+    z-index:1;
+  }
+
+  .progress-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:22px;
+  }
+  .progress-track{
+    flex:1;
+    height:5px;
+    border-radius:99px;
+    background:var(--line);
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:var(--gold);
+    border-radius:99px;
+    transition:width .45s ease;
+  }
+  .progress-label{
+    font-size:13px;
+    color:var(--ink-soft);
+    white-space:nowrap;
+    font-weight:500;
+  }
+
+  .question{
+    font-size:21px;
+    line-height:1.45;
+    font-weight:600;
+    margin:0 0 6px;
+  }
+  .question-hint{
+    font-size:14px;
+    color:var(--ink-soft);
+    margin:0 0 20px;
+    line-height:1.5;
+  }
+
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .option{
+    text-align:left;
+    font-size:15.5px;
+    line-height:1.4;
+    padding:14px 16px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--cream);
+    color:var(--ink);
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease, transform .1s ease;
+  }
+  .option:hover{
+    border-color:var(--gold);
+    background:var(--gold-soft);
+  }
+  .option:active{ transform:scale(.99); }
+  .option:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:2px;
+  }
+  .option.selected{
+    border-color:var(--gold);
+    background:var(--gold-soft);
+    font-weight:600;
+  }
+  .option.multi.selected::after{
+    content:" ✓";
+    color:var(--gold);
+    font-weight:700;
+  }
+
+  .nav-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:24px;
+  }
+
+  .btn{
+    font-size:15px;
+    font-weight:600;
+    padding:11px 22px;
+    border-radius:99px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:opacity .15s ease, transform .1s ease;
+  }
+  .btn:active{ transform:scale(.98); }
+  .btn:disabled{ opacity:.35; cursor:not-allowed; }
+
+  .btn-primary{
+    background:var(--gold);
+    color:#fff;
+  }
+  .btn-primary:hover:not(:disabled){ opacity:.9; }
+
+  .btn-ghost{
+    background:transparent;
+    color:var(--ink-soft);
+    border-color:var(--line);
+  }
+  .btn-ghost:hover:not(:disabled){ border-color:var(--gold); color:var(--ink); }
+
+  /* Result */
+  .result-eyebrow{
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
+    margin:0 0 8px;
+  }
+  .result-title{
+    font-size:24px;
+    font-weight:600;
+    margin:0 0 6px;
+    line-height:1.35;
+  }
+  .result-intro{
+    font-size:15.5px;
+    line-height:1.65;
+    color:var(--ink-soft);
+    margin:0 0 24px;
+  }
+
+  .rec-list{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-bottom:22px;
+  }
+
+  .rec-card{
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px 18px;
+    position:relative;
+    background:var(--cream);
+  }
+  .rec-card.primary{
+    background:var(--green-soft);
+    border-color:#cfe0cd;
+  }
+  .rec-rank{
+    display:inline-block;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:3px 10px;
+    border-radius:99px;
+    margin-bottom:10px;
+    background:var(--maroon-soft);
+    color:var(--maroon);
+  }
+  .rec-card.primary .rec-rank{
+    background:var(--green);
+    color:#fff;
+  }
+  .rec-title{
+    font-size:18px;
+    font-weight:600;
+    margin:0 0 6px;
+    line-height:1.35;
+  }
+  .rec-sub{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0 0 10px;
+    font-style:italic;
+  }
+  .rec-text{
+    font-size:15px;
+    line-height:1.65;
+    margin:0 0 14px;
+    color:var(--ink);
+  }
+  .rec-link{
+    display:inline-block;
+    text-decoration:none;
+    font-weight:600;
+    font-size:14px;
+    padding:9px 18px;
+    border-radius:99px;
+    background:var(--maroon);
+    color:#fff;
+  }
+  .rec-card.primary .rec-link{
+    background:var(--green);
+  }
+  .rec-link:hover{ opacity:.9; }
+
+  .disclaimer{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    line-height:1.6;
+    border-top:1px solid var(--line);
+    padding-top:16px;
+    margin-top:4px;
+  }
+
+  .restart{
+    margin-top:18px;
+    text-align:center;
+  }
+  .restart button{
+    background:none;
+    border:none;
+    font-size:14px;
+    color:var(--ink-soft);
+    text-decoration:underline;
+    cursor:pointer;
+  }
+  .restart button:hover{ color:var(--gold); }
+
+  .hidden{ display:none !important; }
+</style>
+</head>
+<body>
+<nav style="background:rgba(255,253,248,.95);backdrop-filter:blur(16px);border-bottom:1px solid #e5dbca;position:sticky;top:0;z-index:100;height:64px;display:flex;align-items:center;padding:0 clamp(16px,4vw,48px);gap:1.5rem">
+  <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0">
+    <img src="symbol-gold.png" style="width:32px;height:32px;object-fit:contain" alt="">
+    <img src="logo-beritweise.png" style="height:26px;width:auto" alt="Berit Weise">
+  </a>
+  <span style="flex:1"></span>
+  <a href="index.html#tools" style="font:600 .88rem/1 Inter,sans-serif;color:#4f5f3f;text-decoration:none;padding:8px 16px;border-radius:999px;border:1px solid #d0c8b8;background:#fff;white-space:nowrap">← Alle Selbsttests</a>
+  <a href="kontakt.html" style="font:700 .88rem/1 Inter,sans-serif;color:#fff;text-decoration:none;padding:8px 18px;border-radius:999px;background:#a93b35;white-space:nowrap">Termin vereinbaren</a>
+</nav>
+
+<nav style="background:rgba(255,253,248,.95);backdrop-filter:blur(16px);border-bottom:1px solid #e5dbca;position:sticky;top:0;z-index:100;height:64px;display:flex;align-items:center;padding:0 clamp(16px,4vw,48px);gap:1.5rem">
+  <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0">
+    <img src="symbol-gold.png" style="width:32px;height:32px;object-fit:contain" alt="">
+    <img src="logo-beritweise.png" style="height:26px;width:auto" alt="Berit Weise">
+  </a>
+  <span style="flex:1"></span>
+  <a href="index.html#tools" style="font:600 .88rem/1 Inter,sans-serif;color:#4f5f3f;text-decoration:none;padding:8px 16px;border-radius:999px;border:1px solid #d0c8b8;background:#fff;white-space:nowrap">← Alle Selbsttests</a>
+  <a href="kontakt.html" style="font:700 .88rem/1 Inter,sans-serif;color:#fff;text-decoration:none;padding:8px 18px;border-radius:999px;background:#a93b35;white-space:nowrap">Termin vereinbaren</a>
+</nav>
+
+<div class="wrap">
+  <div class="breath" aria-hidden="true"></div>
+
+  <header>
+    <p class="eyebrow sans">Kurzer Orientierungs-Check</p>
+    <h1 class="sans">Welche Begleitung passt zu deinem Anliegen?</h1>
+    <p class="lede sans">Ein paar kurze Fragen &mdash; danach siehst du, welche meiner Arbeitsweisen am besten zu deiner aktuellen Situation passen könnten.</p>
+  </header>
+
+  <div class="card">
+
+    <div id="quiz-view">
+      <div class="progress-row">
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="progress-label sans" id="progress-label"></span>
+      </div>
+
+      <p class="question sans" id="question-text"></p>
+      <p class="question-hint sans hidden" id="question-hint"></p>
+
+      <div class="options" id="options-container"></div>
+
+      <div class="nav-row">
+        <button class="btn btn-ghost sans" id="back-btn">Zurück</button>
+        <button class="btn btn-primary sans" id="next-btn" disabled>Weiter</button>
+      </div>
+    </div>
+
+    <div id="result-view" class="hidden">
+      <p class="result-eyebrow sans">Deine Empfehlung</p>
+      <h2 class="result-title sans" id="result-title"></h2>
+      <p class="result-intro sans" id="result-intro"></p>
+
+      <div class="rec-list" id="rec-list"></div>
+
+      <p class="disclaimer sans">
+        Dieser Check ist eine erste Orientierung und ersetzt kein persönliches Gespräch oder eine Diagnose. Im Erstgespräch schauen wir gemeinsam, welcher Weg wirklich zu dir passt.
+      </p>
+
+      <div class="restart">
+        <button class="sans" id="restart-btn">Test erneut starten</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+
+  // ---------- Angebote ----------
+  // HINWEIS: Diese Angebots-Daten sind identisch mit "offers-config.js" und
+  // werden auch in "lebensrad.html" verwendet. Bei Änderungen an Texten/Links
+  // bitte in allen drei Dateien synchron halten (Copy-Paste aus offers-config.js).
+  const offers = {
+    emdr: {
+      title: "EMDR",
+      sub: "Verarbeitung belastender Erlebnisse",
+      text: "EMDR unterstützt dabei, belastende Erinnerungen, Ängste oder emotionale Blockaden zu verarbeiten &mdash; durch gezielte bilaterale Stimulation kommt die natürliche Verarbeitung im Gehirn wieder in Gang.",
+      link: "https://berit-weise.de/heilpraktikerin-fuer-psychotherapie",
+      linkText: "Mehr zu Psychotherapie & EMDR"
+    },
+    loesung: {
+      title: "Lösungsorientierte Kurztherapie",
+      sub: "nach Steve de Shazer",
+      text: "Statt sich lange mit dem Problem aufzuhalten, schauen wir gemeinsam auf vorhandene Ressourcen und das, was schon funktioniert &mdash; ein kompakter, zielgerichteter Weg zu nachhaltiger Veränderung.",
+      link: "https://berit-weise.de/heilpraktikerin-fuer-psychotherapie",
+      linkText: "Mehr zu Psychotherapie"
+    },
+    systemisch: {
+      title: "Systemische Arbeit",
+      sub: "Beziehungen & Zusammenhänge verstehen",
+      text: "Du lebst nicht isoliert, sondern in Beziehungen und Systemen. Mit systemischen Methoden machen wir diese Zusammenhänge sichtbar und eröffnen neue Perspektiven und Handlungsmöglichkeiten.",
+      link: "https://berit-weise.de/heilpraktikerin-fuer-psychotherapie",
+      linkText: "Mehr zu Psychotherapie"
+    },
+    systemischKinder: {
+      title: "Systemische Arbeit mit Kindern & Jugendlichen",
+      sub: "Für Familie, Schule und Alltag",
+      text: "Kinder und Jugendliche zeigen Belastungen oft anders als Erwachsene. Systemische Methoden machen Beziehungen und Ressourcen sichtbar und entwickeln gemeinsam neue Perspektiven für die ganze Familie.",
+      link: "https://berit-weise.de/heilpraktikerin-fuer-psychotherapie",
+      linkText: "Mehr erfahren"
+    },
+    walkTalk: {
+      title: "Walk & Talk",
+      sub: "Psychotherapie in Bewegung",
+      text: "Beim gemeinsamen Gehen in der Natur entstehen oft neue Gedanken und mehr Klarheit. Bewegung, frische Luft und Gespräch verbinden sich zu einer besonders wirksamen Form der Begleitung.",
+      link: "https://berit-weise.de/walk-talk",
+      linkText: "Mehr zu Walk & Talk"
+    },
+    ganzheitlich: {
+      title: "Ganzheitliche Gesundheit",
+      sub: "Körper, Geist und Seele als Einheit",
+      text: "Wenn vieles gleichzeitig eine Rolle spielt, lohnt sich der Blick aufs große Ganze: Gemeinsam entwickeln wir Wege zu mehr Energie, Wohlbefinden und innerer Balance.",
+      link: "https://berit-weise.de/ganzheitliche-gesundheit",
+      linkText: "Mehr über ganzheitliche Gesundheit"
+    },
+    ernaehrung: {
+      title: "Ernährungsberatung",
+      sub: "Für mehr Energie im Alltag",
+      text: "Individuell, alltagstauglich und ganzheitlich begleitet &mdash; für mehr Energie, Wohlbefinden und Gesundheit durch eine Ernährung, die zu dir und deinem Alltag passt.",
+      link: "https://berit-weise.de/ganzheitliche-ernaehrungsberatung",
+      linkText: "Zur Ernährungsberatung"
+    }
+  };
+
+  // ---------- Fragen ----------
+  // Jede Option hat scores: { offerKey: punkte }
+  const questions = {
+    start: [
+      {
+        id: "fuerWen",
+        text: "Für wen suchst du gerade Unterstützung?",
+        hint: "Das hilft mir, dir die passenden Fragen zu zeigen.",
+        options: [
+          { label: "Für mich selbst", value: "selbst" },
+          { label: "Für mein Kind oder einen Jugendlichen", value: "kind" }
+        ]
+      }
+    ],
+    adult: [
+      {
+        id: "thema",
+        text: "Was beschäftigt dich aktuell am meisten?",
+        hint: "Wähle, was am ehesten zutrifft.",
+        options: [
+          { label: "Belastende Erlebnisse, Ängste oder ein Trauma aus der Vergangenheit", scores: { emdr: 3, systemisch: 1 } },
+          { label: "Ich stecke fest und möchte konkrete Veränderungen anstoßen", scores: { loesung: 3, ganzheitlich: 1 } },
+          { label: "Schwierigkeiten in Beziehungen, Familie oder im Umfeld", scores: { systemisch: 3, loesung: 1 } },
+          { label: "Allgemeine Erschöpfung, wenig Energie, Stress im Alltag", scores: { ganzheitlich: 3, ernaehrung: 1, walkTalk: 1 } }
+        ]
+      },
+      {
+        id: "setting",
+        text: "Wie stellst du dir die Gespräche am liebsten vor?",
+        hint: "",
+        options: [
+          { label: "Klassisch im Gespräch, in ruhiger Atmosphäre", scores: { emdr: 1, loesung: 1, systemisch: 1 } },
+          { label: "Lieber in Bewegung &mdash; draußen, beim Gehen", scores: { walkTalk: 3 } },
+          { label: "Mit Fokus auch auf Körper und Ernährung, nicht nur Gespräch", scores: { ganzheitlich: 2, ernaehrung: 2 } },
+          { label: "Keine Präferenz, hauptsache es passt zu meinem Thema", scores: {} }
+        ]
+      },
+      {
+        id: "koerper",
+        text: "Spielt deine Ernährung oder dein Energielevel im Alltag eine Rolle für dich?",
+        hint: "",
+        options: [
+          { label: "Ja, ich merke deutlich, dass mir hier Energie fehlt", scores: { ernaehrung: 3, ganzheitlich: 2 } },
+          { label: "Etwas, aber es ist nicht mein Hauptthema", scores: { ernaehrung: 1, ganzheitlich: 1 } },
+          { label: "Nein, mein Thema ist eher emotional/mental", scores: { emdr: 1, loesung: 1, systemisch: 1 } }
+        ]
+      }
+    ],
+    child: [
+      {
+        id: "alter",
+        text: "Um wen geht es?",
+        hint: "",
+        options: [
+          { label: "Ein Kind (bis ca. 12 Jahre)", scores: { systemischKinder: 2 } },
+          { label: "Eine*n Jugendliche*n", scores: { systemischKinder: 2, loesung: 1 } }
+        ]
+      },
+      {
+        id: "themaKind",
+        text: "Was beschreibt die Situation am besten?",
+        hint: "",
+        options: [
+          { label: "Schwierigkeiten in der Familie, Schule oder mit Gleichaltrigen", scores: { systemischKinder: 3, systemisch: 1 } },
+          { label: "Ein belastendes Erlebnis oder starke Ängste", scores: { emdr: 2, systemischKinder: 2 } },
+          { label: "Veränderungen im Verhalten, die wir nicht einordnen können", scores: { systemischKinder: 3, loesung: 1 } },
+          { label: "Wir wünschen uns einfach neue Impulse als Familie", scores: { systemischKinder: 2, walkTalk: 1, ganzheitlich: 1 } }
+        ]
+      },
+      {
+        id: "einbindung",
+        text: "Wie soll die Begleitung idealerweise ablaufen?",
+        hint: "",
+        options: [
+          { label: "Mit Einbindung der ganzen Familie", scores: { systemischKinder: 3 } },
+          { label: "Vor allem mit dem Kind/Jugendlichen selbst", scores: { systemischKinder: 2, emdr: 1, loesung: 1 } },
+          { label: "Ich bin mir noch unsicher, wir möchten erst beraten werden", scores: { systemischKinder: 1 } }
+        ]
+      }
+    ]
+  };
+
+  // ---------- State ----------
+  let path = []; // sequence of question objects actually shown
+  let answers = []; // selected option per question
+  let branch = null; // 'adult' or 'child'
+  let current = 0;
+
+  const quizView = document.getElementById('quiz-view');
+  const resultView = document.getElementById('result-view');
+  const questionText = document.getElementById('question-text');
+  const questionHint = document.getElementById('question-hint');
+  const optionsContainer = document.getElementById('options-container');
+  const progressFill = document.getElementById('progress-fill');
+  const progressLabel = document.getElementById('progress-label');
+  const backBtn = document.getElementById('back-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const restartBtn = document.getElementById('restart-btn');
+
+  function totalSteps(){
+    // start question + branch questions (3)
+    return 1 + 3;
+  }
+
+  function getCurrentQuestion(){
+    if(current === 0) return questions.start[0];
+    const branchQs = branch === 'adult' ? questions.adult : questions.child;
+    return branchQs[current - 1];
+  }
+
+  function renderQuestion(){
+    const q = getCurrentQuestion();
+
+    questionText.innerHTML = q.text;
+    if(q.hint){
+      questionHint.innerHTML = q.hint;
+      questionHint.classList.remove('hidden');
+    } else {
+      questionHint.classList.add('hidden');
+    }
+
+    optionsContainer.innerHTML = '';
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'option sans';
+      btn.type = 'button';
+      btn.textContent = opt.label;
+      if(answers[current] === i){ btn.classList.add('selected'); }
+      btn.addEventListener('click', () => {
+        answers[current] = i;
+
+        // Wenn Start-Frage: Branch setzen
+        if(current === 0){
+          branch = opt.value === 'selbst' ? 'adult' : 'child';
+          // reset spätere Antworten, falls Branch wechselt
+          answers = answers.slice(0, 1);
+        }
+
+        renderQuestion();
+      });
+      optionsContainer.appendChild(btn);
+    });
+
+    const steps = totalSteps();
+    progressFill.style.width = (current / steps * 100) + '%';
+    progressLabel.textContent = 'Frage ' + (current + 1) + ' von ' + steps;
+
+    backBtn.disabled = current === 0;
+    nextBtn.disabled = answers[current] === undefined || answers[current] === null;
+    nextBtn.textContent = current === steps - 1 ? 'Ergebnis ansehen' : 'Weiter';
+  }
+
+  function computeScores(){
+    const scores = {};
+    Object.keys(offers).forEach(k => scores[k] = 0);
+
+    const branchQs = branch === 'adult' ? questions.adult : questions.child;
+    branchQs.forEach((q, idx) => {
+      const ansIdx = answers[idx + 1];
+      if(ansIdx === undefined) return;
+      const opt = q.options[ansIdx];
+      if(opt.scores){
+        Object.entries(opt.scores).forEach(([key, val]) => {
+          scores[key] = (scores[key] || 0) + val;
+        });
+      }
+    });
+
+    return scores;
+  }
+
+  function showResult(){
+    const scores = computeScores();
+
+    // sortiere nach score, höchste zuerst, nur > 0
+    let ranked = Object.entries(scores)
+      .filter(([key, val]) => val > 0)
+      .sort((a, b) => b[1] - a[1]);
+
+    // Fallback falls leer
+    if(ranked.length === 0){
+      ranked = branch === 'adult'
+        ? [['ganzheitlich', 1]]
+        : [['systemischKinder', 1]];
+    }
+
+    // Top 3 (oder weniger), aber dedupe und max 3
+    const top = ranked.slice(0, 3).map(r => r[0]);
+
+    const resultTitle = document.getElementById('result-title');
+    const resultIntro = document.getElementById('result-intro');
+    const recList = document.getElementById('rec-list');
+
+    if(branch === 'adult'){
+      resultTitle.textContent = 'Das könnte gut zu dir passen';
+      resultIntro.innerHTML = 'Basierend auf deinen Antworten zeichnen sich diese Wege ab. Du musst dich nicht festlegen &mdash; im Erstgespräch schauen wir gemeinsam genauer hin.';
+    } else {
+      resultTitle.textContent = 'Das könnte für euch passen';
+      resultIntro.innerHTML = 'Basierend auf euren Antworten könnten diese Ansätze hilfreich sein. Gerne klären wir im persönlichen Gespräch, welcher Weg am besten passt.';
+    }
+
+    recList.innerHTML = '';
+    top.forEach((key, i) => {
+      const offer = offers[key];
+      const card = document.createElement('div');
+      card.className = 'rec-card' + (i === 0 ? ' primary' : '');
+
+      const rankLabel = i === 0 ? 'Beste Übereinstimmung' : 'Passt ebenfalls gut';
+
+      card.innerHTML = `
+        <span class="rec-rank sans">${rankLabel}</span>
+        <p class="rec-title sans">${offer.title}</p>
+        <p class="rec-sub sans">${offer.sub}</p>
+        <p class="rec-text sans">${offer.text}</p>
+        <a class="rec-link sans" href="${offer.link}" target="_blank" rel="noopener">${offer.linkText} →</a>
+      `;
+      recList.appendChild(card);
+    });
+
+    progressFill.style.width = '100%';
+
+    quizView.classList.add('hidden');
+    resultView.classList.remove('hidden');
+  }
+
+  nextBtn.addEventListener('click', () => {
+    if(answers[current] === undefined || answers[current] === null) return;
+
+    const steps = totalSteps();
+    if(current === steps - 1){
+      showResult();
+    } else {
+      current++;
+      renderQuestion();
+    }
+  });
+
+  backBtn.addEventListener('click', () => {
+    if(current > 0){
+      current--;
+      renderQuestion();
+    }
+  });
+
+  restartBtn.addEventListener('click', () => {
+    current = 0;
+    answers = [];
+    branch = null;
+    resultView.classList.add('hidden');
+    quizView.classList.remove('hidden');
+    renderQuestion();
+  });
+
+  renderQuestion();
+})();
+</script>
+
+</body>
+</html>

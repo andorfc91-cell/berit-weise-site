@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pausenoase &ndash; Atemübung</title>
+<style>
+  :root{
+    --cream:#FBF6EE;
+    --paper:#FFFFFF;
+    --ink:#3A332B;
+    --ink-soft:#6E6258;
+    --gold:#C7973F;
+    --gold-soft:#EFDFC0;
+    --green:#5C7A5E;
+    --green-soft:#E3ECE2;
+    --line:#E8DFCF;
+    --radius:18px;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    font-family:'Iowan Old Style','Georgia',serif;
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  .sans{ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; }
+
+  .wrap{
+    max-width:520px;
+    margin:0 auto;
+    padding:32px 20px 48px;
+    min-height:100vh;
+  }
+
+  .eyebrow{
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 10px;
+    font-weight:600;
+  }
+  h1{
+    font-size:28px;
+    line-height:1.25;
+    margin:0 0 10px;
+    font-weight:600;
+  }
+  .lede{
+    color:var(--ink-soft);
+    font-size:15.5px;
+    line-height:1.6;
+    margin:0 0 22px;
+    max-width:48ch;
+  }
+
+  .streak-bar{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:99px;
+    padding:8px 16px;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    margin-bottom:22px;
+    width:fit-content;
+  }
+  .streak-flame{ font-size:16px; }
+  .streak-count{ font-weight:700; color:var(--ink); }
+
+  .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:28px 24px;
+    box-shadow:0 1px 2px rgba(58,51,43,0.03);
+  }
+
+  /* SETUP VIEW */
+  .section-label{
+    font-size:13px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    font-weight:600;
+    margin:0 0 10px;
+  }
+
+  .choice-row{
+    display:flex;
+    gap:10px;
+    margin-bottom:24px;
+    flex-wrap:wrap;
+  }
+  .choice{
+    flex:1;
+    min-width:80px;
+    text-align:center;
+    padding:14px 10px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--cream);
+    cursor:pointer;
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--ink);
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .choice:hover{ border-color:var(--gold); }
+  .choice.selected{
+    border-color:var(--gold);
+    background:var(--gold-soft);
+  }
+
+  .tech-card{
+    display:block;
+    width:100%;
+    text-align:left;
+    padding:14px 16px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--cream);
+    cursor:pointer;
+    margin-bottom:10px;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .tech-card:hover{ border-color:var(--gold); }
+  .tech-card.selected{
+    border-color:var(--gold);
+    background:var(--gold-soft);
+  }
+  .tech-name{
+    font-size:15.5px;
+    font-weight:700;
+    margin:0 0 4px;
+  }
+  .tech-desc{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    line-height:1.5;
+    margin:0;
+  }
+
+  .toggle-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:20px 0 26px;
+    font-size:14.5px;
+    color:var(--ink-soft);
+  }
+  .switch{
+    position:relative;
+    width:46px;
+    height:26px;
+    flex-shrink:0;
+  }
+  .switch input{ opacity:0; width:0; height:0; }
+  .slider{
+    position:absolute;
+    cursor:pointer;
+    inset:0;
+    background:var(--line);
+    border-radius:99px;
+    transition:.2s;
+  }
+  .slider::before{
+    content:"";
+    position:absolute;
+    height:20px; width:20px;
+    left:3px; bottom:3px;
+    background:#fff;
+    border-radius:50%;
+    transition:.2s;
+  }
+  input:checked + .slider{ background:var(--gold); }
+  input:checked + .slider::before{ transform:translateX(20px); }
+
+  .btn{
+    font-size:15px;
+    font-weight:600;
+    padding:13px 26px;
+    border-radius:99px;
+    border:1px solid transparent;
+    cursor:pointer;
+    width:100%;
+    transition:opacity .15s ease, transform .1s ease;
+  }
+  .btn:active{ transform:scale(.99); }
+  .btn-primary{ background:var(--gold); color:#fff; }
+  .btn-primary:hover{ opacity:.9; }
+
+  .btn-ghost{
+    background:transparent;
+    color:var(--ink-soft);
+    border-color:var(--line);
+    width:auto;
+    padding:10px 20px;
+    font-size:14px;
+  }
+  .btn-ghost:hover{ border-color:var(--gold); color:var(--ink); }
+
+  /* SESSION VIEW */
+  .hidden{ display:none !important; }
+
+  .session{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding:10px 0 4px;
+  }
+
+  .timer-remaining{
+    font-size:14px;
+    color:var(--ink-soft);
+    margin:0 0 18px;
+    letter-spacing:.05em;
+    font-family:inherit;
+  }
+
+  .breath-stage{
+    position:relative;
+    width:240px;
+    height:240px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 22px;
+  }
+
+  .progress-ring{
+    position:absolute;
+    inset:0;
+    width:240px;
+    height:240px;
+    transform:rotate(-90deg);
+  }
+  .progress-ring-track{
+    fill:none;
+    stroke:var(--line);
+    stroke-width:6;
+  }
+  .progress-ring-fill{
+    fill:none;
+    stroke:var(--gold);
+    stroke-width:6;
+    stroke-linecap:round;
+    transition:stroke 0.6s ease;
+  }
+  .progress-ring-fill.exhale,
+  .progress-ring-fill.holdLow{
+    stroke:var(--green);
+  }
+
+  .breath-circle{
+    position:absolute;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, var(--gold-soft), var(--gold) 75%);
+    width:120px;
+    height:120px;
+    opacity:.85;
+    transition:opacity 0.6s ease-in-out, background 0.6s ease-in-out;
+    transform:scale(1);
+    will-change:transform;
+  }
+  .breath-circle.inhale{ opacity:1; }
+  .breath-circle.hold{ opacity:.9; }
+  .breath-circle.exhale{
+    opacity:.8;
+    background:radial-gradient(circle at 35% 30%, var(--green-soft), var(--green) 75%);
+  }
+  .breath-circle.holdLow{
+    opacity:.7;
+    background:radial-gradient(circle at 35% 30%, var(--green-soft), var(--green) 75%);
+  }
+
+  .breath-text{
+    position:relative;
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    text-align:center;
+    pointer-events:none;
+  }
+
+  .breath-label{
+    font-size:18px;
+    font-weight:600;
+    color:var(--ink);
+    margin:0;
+  }
+
+  .phase-count{
+    font-size:26px;
+    font-weight:700;
+    color:var(--ink);
+    margin:0;
+    font-family:inherit;
+    letter-spacing:.02em;
+  }
+
+  .phase-overview{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:6px;
+    margin:0 0 26px;
+  }
+  .phase-overview .phase-step{
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .phase-overview .phase-pill{
+    font-size:12.5px;
+    font-weight:600;
+    padding:6px 12px;
+    border-radius:99px;
+    background:var(--cream);
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    transition:background .3s ease, color .3s ease, border-color .3s ease, transform .3s ease;
+  }
+  .phase-overview .phase-pill.active{
+    background:var(--gold);
+    border-color:var(--gold);
+    color:#fff;
+    transform:scale(1.08);
+  }
+  .phase-overview .phase-pill.active.exhale-pill,
+  .phase-overview .phase-pill.active.holdLow-pill{
+    background:var(--green);
+    border-color:var(--green);
+  }
+  .phase-overview .phase-arrow{
+    font-size:12px;
+    color:var(--line);
+  }
+
+  .cycle-count{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+
+  /* DONE VIEW */
+  .done{
+    text-align:center;
+    padding:6px 0;
+  }
+  .done-eyebrow{
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
+    margin:0 0 10px;
+  }
+  .done-title{
+    font-size:24px;
+    font-weight:600;
+    margin:0 0 16px;
+  }
+  .impulse{
+    background:var(--green-soft);
+    border-radius:14px;
+    padding:18px 20px;
+    font-size:15.5px;
+    line-height:1.65;
+    margin:0 0 24px;
+    color:var(--ink);
+  }
+  .streak-celebrate{
+    font-size:15px;
+    color:var(--ink-soft);
+    margin:0 0 12px;
+  }
+  .streak-celebrate b{ color:var(--ink); }
+
+  .tomorrow-hint{
+    font-size:14px;
+    color:var(--gold);
+    font-weight:600;
+    margin:0 0 24px;
+  }
+</style>
+</head>
+<body>
+<nav style="background:rgba(255,253,248,.95);backdrop-filter:blur(16px);border-bottom:1px solid #e5dbca;position:sticky;top:0;z-index:100;height:64px;display:flex;align-items:center;padding:0 clamp(16px,4vw,48px);gap:1.5rem">
+  <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0">
+    <img src="symbol-gold.png" style="width:32px;height:32px;object-fit:contain" alt="">
+    <img src="logo-beritweise.png" style="height:26px;width:auto" alt="Berit Weise">
+  </a>
+  <span style="flex:1"></span>
+  <a href="index.html#tools" style="font:600 .88rem/1 Inter,sans-serif;color:#4f5f3f;text-decoration:none;padding:8px 16px;border-radius:999px;border:1px solid #d0c8b8;background:#fff;white-space:nowrap">← Alle Selbsttests</a>
+  <a href="kontakt.html" style="font:700 .88rem/1 Inter,sans-serif;color:#fff;text-decoration:none;padding:8px 18px;border-radius:999px;background:#a93b35;white-space:nowrap">Termin vereinbaren</a>
+</nav>
+
+<nav style="background:rgba(255,253,248,.95);backdrop-filter:blur(16px);border-bottom:1px solid #e5dbca;position:sticky;top:0;z-index:100;height:64px;display:flex;align-items:center;padding:0 clamp(16px,4vw,48px);gap:1.5rem">
+  <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0">
+    <img src="symbol-gold.png" style="width:32px;height:32px;object-fit:contain" alt="">
+    <img src="logo-beritweise.png" style="height:26px;width:auto" alt="Berit Weise">
+  </a>
+  <span style="flex:1"></span>
+  <a href="index.html#tools" style="font:600 .88rem/1 Inter,sans-serif;color:#4f5f3f;text-decoration:none;padding:8px 16px;border-radius:999px;border:1px solid #d0c8b8;background:#fff;white-space:nowrap">← Alle Selbsttests</a>
+  <a href="kontakt.html" style="font:700 .88rem/1 Inter,sans-serif;color:#fff;text-decoration:none;padding:8px 18px;border-radius:999px;background:#a93b35;white-space:nowrap">Termin vereinbaren</a>
+</nav>
+<div class="wrap">
+
+  <p class="eyebrow sans">Pausenoase</p>
+  <h1 class="sans">Kurz durchatmen</h1>
+  <p class="lede sans">Eine kleine bewusste Pause für zwischendurch &mdash; wähle deine Zeit und Technik, der Rest läuft von selbst.</p>
+
+  <div class="streak-bar sans">
+    <span class="streak-flame">🔥</span>
+    <span>Aktuelle Serie: <span class="streak-count" id="streak-count">0 Tage</span></span>
+  </div>
+
+  <div class="card">
+
+    <!-- SETUP -->
+    <div id="setup-view">
+      <p class="section-label sans">Wie viel Zeit hast du?</p>
+      <div class="choice-row" id="duration-row">
+        <button class="choice sans" data-min="2">2 Min.</button>
+        <button class="choice sans selected" data-min="5">5 Min.</button>
+        <button class="choice sans" data-min="10">10 Min.</button>
+      </div>
+
+      <p class="section-label sans">Welche Technik passt jetzt zu dir?</p>
+      <div id="technique-list"></div>
+
+      <div class="toggle-row sans">
+        <span>Sanfter Ton bei jedem Phasenwechsel</span>
+        <label class="switch">
+          <input type="checkbox" id="sound-toggle" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <button class="btn btn-primary sans" id="start-btn">Übung starten</button>
+    </div>
+
+    <!-- SESSION -->
+    <div id="session-view" class="session hidden">
+      <p class="timer-remaining sans" id="timer-remaining"></p>
+
+      <div class="breath-stage">
+        <svg class="progress-ring" viewBox="0 0 240 240">
+          <circle class="progress-ring-track" cx="120" cy="120" r="110"></circle>
+          <circle class="progress-ring-fill" id="progress-ring-fill" cx="120" cy="120" r="110"></circle>
+        </svg>
+        <div class="breath-circle" id="breath-circle"></div>
+        <div class="breath-text">
+          <p class="breath-label sans" id="breath-label">Bereit?</p>
+          <p class="phase-count sans" id="phase-count"></p>
+        </div>
+      </div>
+
+      <div class="phase-overview sans" id="phase-overview"></div>
+
+      <button class="btn btn-ghost sans" id="stop-btn">Übung beenden</button>
+    </div>
+
+    <!-- DONE -->
+    <div id="done-view" class="done hidden">
+      <p class="done-eyebrow sans">Geschafft</p>
+      <h2 class="done-title sans">Schön, dass du dir diese Zeit genommen hast.</h2>
+
+      <div class="impulse sans" id="impulse-text"></div>
+
+      <p class="streak-celebrate sans" id="streak-celebrate"></p>
+
+      <p class="tomorrow-hint sans" id="tomorrow-hint"></p>
+
+      <button class="btn btn-primary sans" id="again-btn">Neue Übung starten</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+
+  // ---------- Techniken ----------
+  // phases: [{label, seconds, key}], key steuert visuelle Klasse
+  const techniques = [
+    {
+      id: "box",
+      name: "Box Breathing (4-4-4-4)",
+      desc: "Gleichmäßig &amp; fokussierend. Für zwischendurch.",
+      phases: [
+        { label: "Einatmen", seconds: 4, cls: "inhale" },
+        { label: "Halten", seconds: 4, cls: "hold" },
+        { label: "Ausatmen", seconds: 4, cls: "exhale" },
+        { label: "Halten", seconds: 4, cls: "holdLow" }
+      ]
+    },
+    {
+      id: "478",
+      name: "4-7-8 Atmung",
+      desc: "Sehr beruhigend. Gut bei innerer Unruhe.",
+      phases: [
+        { label: "Einatmen", seconds: 4, cls: "inhale" },
+        { label: "Halten", seconds: 7, cls: "hold" },
+        { label: "Ausatmen", seconds: 8, cls: "exhale" }
+      ]
+    },
+    {
+      id: "energy",
+      name: "Energie-Atmung (4-2-4)",
+      desc: "Macht wach &amp; klar. Für den Nachmittag.",
+      phases: [
+        { label: "Einatmen", seconds: 4, cls: "inhale" },
+        { label: "Halten", seconds: 2, cls: "hold" },
+        { label: "Ausatmen", seconds: 4, cls: "exhale" }
+      ]
+    }
+  ];
+
+  // ---------- Tagesimpulse ----------
+  const impulses = [
+    "Du musst nicht alles auf einmal lösen. Ein bewusster Atemzug reicht, um wieder bei dir anzukommen.",
+    "Erlaube dir, diese Ruhe mit in den restlichen Tag zu nehmen &mdash; auch wenn es nur für ein paar Minuten ist.",
+    "Kleine Pausen sind kein Luxus, sondern Pflege. Du hast dir gerade genau das gegeben.",
+    "Manchmal reicht ein bewusster Moment, um den nächsten Schritt klarer zu sehen.",
+    "Dein Körper merkt sich solche Momente &mdash; auch wenn der Kopf schon wieder weiter ist.",
+    "Du darfst auch mitten am Tag innehalten. Das ist keine Unterbrechung, sondern Teil davon.",
+    "Atme noch einmal bewusst aus, bevor du weitermachst &mdash; das war's schon."
+  ];
+
+  // ---------- State ----------
+  let selectedDuration = 5; // minutes
+  let selectedTechnique = techniques[0];
+  let soundOn = true;
+
+  let sessionTimer = null;
+  let countdownTimer = null;
+  let remainingSeconds = 0;
+  let phaseIndex = 0;
+
+  // ---------- Elements ----------
+  const setupView = document.getElementById('setup-view');
+  const sessionView = document.getElementById('session-view');
+  const doneView = document.getElementById('done-view');
+
+  const durationRow = document.getElementById('duration-row');
+  const techniqueList = document.getElementById('technique-list');
+  const soundToggle = document.getElementById('sound-toggle');
+  const startBtn = document.getElementById('start-btn');
+  const stopBtn = document.getElementById('stop-btn');
+  const againBtn = document.getElementById('again-btn');
+
+  const timerRemaining = document.getElementById('timer-remaining');
+  const breathCircle = document.getElementById('breath-circle');
+  const breathLabel = document.getElementById('breath-label');
+  const phaseCount = document.getElementById('phase-count');
+  const phaseOverview = document.getElementById('phase-overview');
+  const progressRingFill = document.getElementById('progress-ring-fill');
+
+  const RING_RADIUS = 110;
+  const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
+  progressRingFill.style.strokeDasharray = RING_CIRCUMFERENCE;
+  progressRingFill.style.strokeDashoffset = 0;
+
+  let phaseAnimFrame = null;
+
+  const streakCountEl = document.getElementById('streak-count');
+  const impulseText = document.getElementById('impulse-text');
+  const streakCelebrate = document.getElementById('streak-celebrate');
+  const tomorrowHint = document.getElementById('tomorrow-hint');
+
+  // ---------- Setup rendering ----------
+  function renderTechniques(){
+    techniqueList.innerHTML = '';
+    techniques.forEach(t => {
+      const div = document.createElement('button');
+      div.className = 'tech-card sans' + (t.id === selectedTechnique.id ? ' selected' : '');
+      div.type = 'button';
+      div.innerHTML = `<p class="tech-name">${t.name}</p><p class="tech-desc">${t.desc}</p>`;
+      div.addEventListener('click', () => {
+        selectedTechnique = t;
+        renderTechniques();
+      });
+      techniqueList.appendChild(div);
+    });
+  }
+  renderTechniques();
+
+  durationRow.querySelectorAll('.choice').forEach(btn => {
+    btn.addEventListener('click', () => {
+      durationRow.querySelectorAll('.choice').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedDuration = parseInt(btn.dataset.min, 10);
+    });
+  });
+
+  soundToggle.addEventListener('change', () => {
+    soundOn = soundToggle.checked;
+  });
+
+  // ---------- Sound: sanftes, harfenartiges Arpeggio ----------
+  let audioCtx = null;
+
+  function playHarpNote(freq, startTime, volume){
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+
+    // sanfter Anschlag, langes Ausklingen wie bei einer Harfensaite
+    gain.gain.setValueAtTime(0.0001, startTime);
+    gain.gain.exponentialRampToValueAtTime(volume, startTime + 0.04);
+    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 2.4);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(startTime);
+    osc.stop(startTime + 2.5);
+  }
+
+  function playChime(){
+    if(!soundOn) return;
+    try{
+      if(!audioCtx){
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      const now = audioCtx.currentTime;
+      // sanftes Arpeggio aus einer Pentatonik (warm, harfenartig)
+      const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
+      notes.forEach((freq, i) => {
+        playHarpNote(freq, now + i * 0.09, 0.055);
+      });
+    }catch(e){ /* ignore */ }
+  }
+
+  // ---------- Streak (localStorage) ----------
+  function getStreakData(){
+    try{
+      const raw = localStorage.getItem('pausenoase_streak');
+      if(!raw) return { count: 0, lastDate: null };
+      return JSON.parse(raw);
+    }catch(e){
+      return { count: 0, lastDate: null };
+    }
+  }
+
+  function updateStreakOnCompletion(){
+    const today = new Date();
+    const todayStr = today.toISOString().slice(0,10);
+
+    let data = getStreakData();
+
+    if(data.lastDate === todayStr){
+      // schon heute gemacht, Streak bleibt
+      return data;
+    }
+
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().slice(0,10);
+
+    if(data.lastDate === yesterdayStr){
+      data.count = (data.count || 0) + 1;
+    } else {
+      data.count = 1;
+    }
+    data.lastDate = todayStr;
+
+    try{
+      localStorage.setItem('pausenoase_streak', JSON.stringify(data));
+    }catch(e){ /* ignore */ }
+
+    return data;
+  }
+
+  function renderStreak(){
+    const data = getStreakData();
+    const count = data.count || 0;
+    streakCountEl.textContent = count === 1 ? '1 Tag' : count + ' Tage';
+  }
+  renderStreak();
+
+  // ---------- Session logic ----------
+  function formatTime(totalSec){
+    const m = Math.floor(totalSec / 60);
+    const s = totalSec % 60;
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  function renderPhaseOverview(activeIndex){
+    phaseOverview.innerHTML = '';
+    selectedTechnique.phases.forEach((phase, i) => {
+      if(i > 0){
+        const arrow = document.createElement('span');
+        arrow.className = 'phase-arrow';
+        arrow.textContent = '→';
+        phaseOverview.appendChild(arrow);
+      }
+      const pill = document.createElement('span');
+      pill.className = 'phase-pill ' + phase.cls + '-pill' + (i === activeIndex ? ' active' : '');
+      pill.textContent = phase.label;
+      phaseOverview.appendChild(pill);
+    });
+  }
+
+  function startSession(){
+    remainingSeconds = selectedDuration * 60;
+    phaseIndex = -1; // will be incremented to 0 on first tick
+
+    setupView.classList.add('hidden');
+    doneView.classList.add('hidden');
+    sessionView.classList.remove('hidden');
+
+    timerRemaining.textContent = 'Noch ' + formatTime(remainingSeconds);
+
+    // Vorbereitungs-Countdown, bevor die erste Atemphase beginnt
+    breathLabel.textContent = 'Mach es dir bequem …';
+    breathCircle.className = 'breath-circle';
+    breathCircle.style.transform = 'scale(1)';
+    progressRingFill.classList.remove('inhale','hold','exhale','holdLow');
+    progressRingFill.style.strokeDashoffset = 0;
+    phaseOverview.innerHTML = '';
+
+    let countdown = 5;
+    phaseCount.textContent = countdown + ' s';
+
+    countdownTimer = setInterval(() => {
+      countdown--;
+      if(countdown > 0){
+        phaseCount.textContent = countdown + ' s';
+      } else {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+        phaseCount.textContent = '';
+        nextPhase();
+
+        sessionTimer = setInterval(() => {
+          remainingSeconds--;
+          timerRemaining.textContent = 'Noch ' + formatTime(Math.max(remainingSeconds,0));
+          if(remainingSeconds <= 0){
+            finishSession();
+          }
+        }, 1000);
+      }
+    }, 1000);
+  }
+
+  // Skalierung des Atem-Kreises pro Phase: von -> zu
+  const SCALE_SMALL = 1;
+  const SCALE_LARGE = 1.6;
+  const scaleRanges = {
+    inhale:  { from: SCALE_SMALL, to: SCALE_LARGE }, // wächst
+    hold:    { from: SCALE_LARGE, to: SCALE_LARGE }, // bleibt groß
+    exhale:  { from: SCALE_LARGE, to: SCALE_SMALL }, // schrumpft
+    holdLow: { from: SCALE_SMALL, to: SCALE_SMALL }  // bleibt klein
+  };
+
+  function nextPhase(){
+    phaseIndex = (phaseIndex + 1) % selectedTechnique.phases.length;
+    const phase = selectedTechnique.phases[phaseIndex];
+
+    breathLabel.textContent = phase.label;
+    breathCircle.className = 'breath-circle ' + phase.cls;
+    progressRingFill.classList.remove('inhale','hold','exhale','holdLow');
+    progressRingFill.classList.add(phase.cls);
+    renderPhaseOverview(phaseIndex);
+
+    playChime();
+
+    const phaseDurationMs = phase.seconds * 1000;
+    const phaseStart = performance.now();
+    const scaleRange = scaleRanges[phase.cls] || { from: SCALE_SMALL, to: SCALE_SMALL };
+
+    if(phaseAnimFrame) cancelAnimationFrame(phaseAnimFrame);
+
+    function tick(now){
+      const elapsed = now - phaseStart;
+      const remainingMs = Math.max(phaseDurationMs - elapsed, 0);
+      const remainingWhole = Math.ceil(remainingMs / 1000);
+      phaseCount.textContent = remainingWhole + ' s';
+
+      // Ring: voll am Anfang der Phase, leer am Ende
+      const fraction = Math.max(remainingMs / phaseDurationMs, 0);
+      const offset = RING_CIRCUMFERENCE * (1 - fraction);
+      progressRingFill.style.strokeDashoffset = offset;
+
+      // Kreis: kontinuierliche Skalierung über die Phasendauer (wie ein Atemzug)
+      const progress = Math.min(elapsed / phaseDurationMs, 1);
+      const eased = progress < 0.5
+        ? 2 * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 2) / 2; // ease-in-out
+      const scale = scaleRange.from + (scaleRange.to - scaleRange.from) * eased;
+      breathCircle.style.transform = 'scale(' + scale.toFixed(3) + ')';
+
+      if(remainingMs > 0 && remainingSeconds > 0){
+        phaseAnimFrame = requestAnimationFrame(tick);
+      } else if(remainingSeconds > 0){
+        nextPhase();
+      }
+    }
+    phaseAnimFrame = requestAnimationFrame(tick);
+  }
+
+  function finishSession(){
+    clearInterval(sessionTimer);
+    if(phaseAnimFrame) cancelAnimationFrame(phaseAnimFrame);
+
+    const data = updateStreakOnCompletion();
+
+    sessionView.classList.add('hidden');
+    doneView.classList.remove('hidden');
+
+    const randomImpulse = impulses[Math.floor(Math.random() * impulses.length)];
+    impulseText.innerHTML = randomImpulse;
+
+    const count = data.count || 0;
+    if(count > 1){
+      streakCelebrate.innerHTML = 'Du bist jetzt <b>' + count + ' Tage</b> in Folge dabei. Schön, dass du dir diese Routine gönnst.';
+    } else {
+      streakCelebrate.innerHTML = 'Das war dein erster Tag &mdash; ein schöner Anfang für eine kleine Routine.';
+    }
+
+    tomorrowHint.textContent = 'Bis morgen zur gleichen Zeit? 🔥';
+
+    renderStreak();
+  }
+
+  function stopSession(){
+    clearInterval(sessionTimer);
+    clearInterval(countdownTimer);
+    countdownTimer = null;
+    if(phaseAnimFrame) cancelAnimationFrame(phaseAnimFrame);
+    sessionView.classList.add('hidden');
+    setupView.classList.remove('hidden');
+  }
+
+  startBtn.addEventListener('click', startSession);
+  stopBtn.addEventListener('click', stopSession);
+  againBtn.addEventListener('click', () => {
+    doneView.classList.add('hidden');
+    setupView.classList.remove('hidden');
+  });
+
+})();
+</script>
+
+</body>
+</html>

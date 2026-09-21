@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lebensrad &ndash; Ganzheitlicher Gesundheits-Check</title>
+<style>
+  :root{
+    --cream:#FBF6EE;
+    --paper:#FFFFFF;
+    --ink:#3A332B;
+    --ink-soft:#6E6258;
+    --gold:#C7973F;
+    --gold-soft:#EFDFC0;
+    --maroon:#7A2E27;
+    --maroon-soft:#F3E2DF;
+    --green:#5C7A5E;
+    --green-soft:#E3ECE2;
+    --line:#E8DFCF;
+    --radius:18px;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    font-family:'Iowan Old Style','Georgia',serif;
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  .sans{ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; }
+
+  .wrap{
+    max-width:600px;
+    margin:0 auto;
+    padding:32px 20px 48px;
+    position:relative;
+    min-height:100vh;
+  }
+
+  .breath{
+    position:absolute;
+    top:18px;
+    right:18px;
+    width:54px;
+    height:54px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, var(--gold-soft), var(--gold) 80%);
+    opacity:0.55;
+    animation:breathe 6s ease-in-out infinite;
+    z-index:0;
+  }
+  @keyframes breathe{
+    0%,100%{ transform:scale(1); opacity:.45; }
+    50%{ transform:scale(1.35); opacity:.7; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .breath{ animation:none; }
+  }
+
+  header{
+    position:relative;
+    z-index:1;
+    padding-bottom:8px;
+  }
+
+  .eyebrow{
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 10px;
+    font-weight:600;
+  }
+  h1{
+    font-size:28px;
+    line-height:1.25;
+    margin:0 0 10px;
+    font-weight:600;
+    max-width:85%;
+  }
+  .lede{
+    color:var(--ink-soft);
+    font-size:15.5px;
+    line-height:1.6;
+    margin:0 0 26px;
+    max-width:48ch;
+  }
+
+  .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:28px 24px;
+    box-shadow:0 1px 2px rgba(58,51,43,0.03);
+    position:relative;
+    z-index:1;
+  }
+
+  .hidden{ display:none !important; }
+
+  /* ---------- ASSESSMENT VIEW ---------- */
+  .area-block{
+    margin-bottom:28px;
+  }
+  .area-block:last-child{ margin-bottom:4px; }
+
+  .area-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:6px;
+  }
+  .area-name{
+    font-size:17px;
+    font-weight:600;
+    margin:0;
+  }
+  .area-value{
+    font-size:15px;
+    font-weight:700;
+    color:var(--gold);
+    font-family:inherit;
+    min-width:32px;
+    text-align:right;
+  }
+  .area-desc{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    line-height:1.5;
+    margin:0 0 12px;
+  }
+
+  input[type="range"]{
+    width:100%;
+    -webkit-appearance:none;
+    appearance:none;
+    height:6px;
+    border-radius:99px;
+    background:var(--line);
+    outline:none;
+    margin:0;
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    appearance:none;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:var(--gold);
+    border:3px solid #fff;
+    box-shadow:0 1px 3px rgba(58,51,43,0.25);
+    cursor:pointer;
+    margin-top:-9px;
+  }
+  input[type="range"]::-moz-range-thumb{
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:var(--gold);
+    border:3px solid #fff;
+    box-shadow:0 1px 3px rgba(58,51,43,0.25);
+    cursor:pointer;
+  }
+
+  .scale-labels{
+    display:flex;
+    justify-content:space-between;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    margin-top:6px;
+  }
+
+  .btn{
+    font-size:15px;
+    font-weight:600;
+    padding:13px 26px;
+    border-radius:99px;
+    border:1px solid transparent;
+    cursor:pointer;
+    width:100%;
+    transition:opacity .15s ease, transform .1s ease;
+  }
+  .btn:active{ transform:scale(.99); }
+  .btn-primary{ background:var(--gold); color:#fff; margin-top:8px; }
+  .btn-primary:hover{ opacity:.9; }
+
+  /* ---------- RESULT VIEW ---------- */
+  .result-eyebrow{
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
+    margin:0 0 8px;
+  }
+  .result-title{
+    font-size:24px;
+    font-weight:600;
+    margin:0 0 14px;
+    line-height:1.35;
+  }
+
+  .chart-wrap{
+    display:flex;
+    justify-content:center;
+    margin-bottom:10px;
+  }
+
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 16px;
+    justify-content:center;
+    margin-bottom:24px;
+  }
+  .legend-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .legend-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--gold);
+    flex-shrink:0;
+  }
+  .legend-value{
+    font-weight:700;
+    color:var(--ink);
+  }
+
+  .chart-legend{
+    display:flex;
+    justify-content:center;
+    gap:22px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+  }
+  .chart-legend-item{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+  .chart-legend-swatch{
+    width:22px;
+    height:0;
+    border-top-width:2.5px;
+    border-top-style:solid;
+  }
+  .chart-legend-swatch.own{
+    border-top-color:var(--gold);
+  }
+  .chart-legend-swatch.reference{
+    border-top-color:var(--green);
+    border-top-style:dashed;
+  }
+
+  .result-text{
+    font-size:15.5px;
+    line-height:1.7;
+    margin:0 0 24px;
+    color:var(--ink);
+  }
+
+  .rec-list{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-bottom:22px;
+  }
+  .rec-card{
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px 18px;
+    background:var(--cream);
+  }
+  .rec-card.primary{
+    background:var(--green-soft);
+    border-color:#cfe0cd;
+  }
+  .rec-rank{
+    display:inline-block;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:3px 10px;
+    border-radius:99px;
+    margin-bottom:10px;
+    background:var(--maroon-soft);
+    color:var(--maroon);
+  }
+  .rec-card.primary .rec-rank{
+    background:var(--green);
+    color:#fff;
+  }
+  .rec-title{
+    font-size:18px;
+    font-weight:600;
+    margin:0 0 6px;
+    line-height:1.35;
+  }
+  .rec-sub{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0 0 10px;
+    font-style:italic;
+  }
+  .rec-text{
+    font-size:15px;
+    line-height:1.65;
+    margin:0 0 14px;
+    color:var(--ink);
+  }
+  .rec-link{
+    display:inline-block;
+    text-decoration:none;
+    font-weight:600;
+    font-size:14px;
+    padding:9px 18px;
+    border-radius:99px;
+    background:var(--maroon);
+    color:#fff;
+  }
+  .rec-card.primary .rec-link{
+    background:var(--green);
+  }
+  .rec-link:hover{ opacity:.9; }
+
+  .disclaimer{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    line-height:1.6;
+    border-top:1px solid var(--line);
+    padding-top:16px;
+    margin-top:4px;
+  }
+
+  .restart{
+    margin-top:18px;
+    text-align:center;
+  }
+  .restart button{
+    background:none;
+    border:none;
+    font-size:14px;
+    color:var(--ink-soft);
+    text-decoration:underline;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  .restart button:hover{ color:var(--gold); }
+</style>
+</head>
+<body>
+<nav style="background:rgba(255,253,248,.95);backdrop-filter:blur(16px);border-bottom:1px solid #e5dbca;position:sticky;top:0;z-index:100;height:64px;display:flex;align-items:center;padding:0 clamp(16px,4vw,48px);gap:1.5rem">
+  <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0">
+    <img src="symbol-gold.png" style="width:32px;height:32px;object-fit:contain" alt="">
+    <img src="logo-beritweise.png" style="height:26px;width:auto" alt="Berit Weise">
+  </a>
+  <span style="flex:1"></span>
+  <a href="index.html#tools" style="font:600 .88rem/1 Inter,sans-serif;color:#4f5f3f;text-decoration:none;padding:8px 16px;border-radius:999px;border:1px solid #d0c8b8;background:#fff;white-space:nowrap">← Alle Selbsttests</a>
+  <a href="kontakt.html" style="font:700 .88rem/1 Inter,sans-serif;color:#fff;text-decoration:none;padding:8px 18px;border-radius:999px;background:#a93b35;white-space:nowrap">Termin vereinbaren</a>
+</nav>
+
+<nav style="background:rgba(255,253,248,.95);backdrop-filter:blur(16px);border-bottom:1px solid #e5dbca;position:sticky;top:0;z-index:100;height:64px;display:flex;align-items:center;padding:0 clamp(16px,4vw,48px);gap:1.5rem">
+  <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0">
+    <img src="symbol-gold.png" style="width:32px;height:32px;object-fit:contain" alt="">
+    <img src="logo-beritweise.png" style="height:26px;width:auto" alt="Berit Weise">
+  </a>
+  <span style="flex:1"></span>
+  <a href="index.html#tools" style="font:600 .88rem/1 Inter,sans-serif;color:#4f5f3f;text-decoration:none;padding:8px 16px;border-radius:999px;border:1px solid #d0c8b8;background:#fff;white-space:nowrap">← Alle Selbsttests</a>
+  <a href="kontakt.html" style="font:700 .88rem/1 Inter,sans-serif;color:#fff;text-decoration:none;padding:8px 18px;border-radius:999px;background:#a93b35;white-space:nowrap">Termin vereinbaren</a>
+</nav>
+
+<div class="wrap">
+  <div class="breath" aria-hidden="true"></div>
+
+  <header>
+    <p class="eyebrow sans">Ganzheitlicher Gesundheits-Check</p>
+    <h1 class="sans">Dein Lebensrad</h1>
+    <p class="lede sans">Bewerte sechs Lebensbereiche von 1 (sehr unzufrieden) bis 10 (sehr zufrieden) &mdash; am Ende siehst du dein persönliches Lebensrad und einen kurzen Impuls dazu.</p>
+  </header>
+
+  <div class="card">
+
+    <!-- ASSESSMENT -->
+    <div id="assessment-view">
+      <div id="areas-container"></div>
+
+      <button class="btn btn-primary sans" id="show-result-btn">Mein Lebensrad anzeigen</button>
+    </div>
+
+    <!-- RESULT -->
+    <div id="result-view" class="hidden">
+      <p class="result-eyebrow sans">Dein Ergebnis</p>
+      <h2 class="result-title sans" id="result-title">Dein Lebensrad</h2>
+
+      <div class="chart-wrap">
+        <svg id="radar-chart" width="320" height="320" viewBox="0 0 320 320"></svg>
+      </div>
+
+      <div class="chart-legend">
+        <div class="chart-legend-item">
+          <span class="chart-legend-swatch own"></span>
+          Deine Werte
+        </div>
+        <div class="chart-legend-item">
+          <span class="chart-legend-swatch reference"></span>
+          Ausgewogenes Lebensrad (Orientierung)
+        </div>
+      </div>
+
+      <div class="legend sans" id="legend"></div>
+
+      <p class="result-text sans" id="result-text"></p>
+
+      <div class="rec-list" id="rec-list"></div>
+
+      <p class="disclaimer sans">
+        Dieses Lebensrad ist eine Momentaufnahme deiner eigenen Einschätzung und ersetzt kein persönliches Gespräch. Es kann ein guter Ausgangspunkt sein, um gemeinsam zu schauen, welche Bereiche dir gerade besonders wichtig sind.
+      </p>
+
+      <div class="restart">
+        <button class="sans" id="restart-btn">Lebensrad neu ausfüllen</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+
+  // ---------- Lebensbereiche ----------
+  const areas = [
+    {
+      id: "koerper",
+      name: "Körper & Gesundheit",
+      desc: "Wie geht es deinem Körper aktuell &mdash; Energie, Beschwerden, allgemeines Wohlbefinden?"
+    },
+    {
+      id: "psyche",
+      name: "Psyche & Emotionen",
+      desc: "Wie ist dein inneres Gleichgewicht &mdash; Gelassenheit, Stimmung, Umgang mit Gefühlen?"
+    },
+    {
+      id: "ernaehrung",
+      name: "Ernährung",
+      desc: "Wie zufrieden bist du mit deiner Ernährung im Alltag?"
+    },
+    {
+      id: "bewegung",
+      name: "Bewegung & Aktivität",
+      desc: "Wie viel Bewegung und körperliche Aktivität hast du aktuell in deinem Alltag?"
+    },
+    {
+      id: "soziales",
+      name: "Soziales Umfeld",
+      desc: "Wie zufrieden bist du mit deinen Beziehungen, Familie, Freundschaften?"
+    },
+    {
+      id: "sinn",
+      name: "Sinn & Ausgleich",
+      desc: "Wie sehr fühlst du dich erfüllt &mdash; durch Sinn, Hobbys, Ruhe und Ausgleich im Leben?"
+    }
+  ];
+
+  // ---------- Angebote (für Empfehlungen) ----------
+  // HINWEIS: Diese Texte/Links sind in "offers-config.js" als zentrale Referenz
+  // gesammelt und werden auch in "passende-begleitung.html" verwendet.
+  // Bei Änderungen an Texten/Links bitte alle Stellen synchron halten.
+  const offers = {
+    koerper: {
+      title: "Ganzheitliche Gesundheit",
+      sub: "Körper, Geist und Seele als Einheit",
+      text: "Wenn der Körper im Fokus steht, lohnt sich der Blick aufs große Ganze: Gemeinsam entwickeln wir Wege zu mehr Energie, Wohlbefinden und innerer Balance.",
+      link: "https://berit-weise.de/ganzheitliche-gesundheit",
+      linkText: "Mehr über ganzheitliche Gesundheit"
+    },
+    psyche: {
+      title: "Psychotherapie",
+      sub: "EMDR, lösungsorientiert & systemisch",
+      text: "Wenn die Psyche und Emotionen aktuell viel Raum einnehmen, kann ein persönliches Gespräch helfen, Klarheit zu gewinnen und neue Perspektiven zu entwickeln.",
+      link: "https://berit-weise.de/heilpraktikerin-fuer-psychotherapie",
+      linkText: "Mehr zu Psychotherapie"
+    },
+    ernaehrung: {
+      title: "Ernährungsberatung",
+      sub: "Für mehr Energie im Alltag",
+      text: "Individuell, alltagstauglich und ganzheitlich begleitet &mdash; für mehr Energie, Wohlbefinden und Gesundheit durch eine Ernährung, die zu dir und deinem Alltag passt.",
+      link: "https://berit-weise.de/ganzheitliche-ernaehrungsberatung",
+      linkText: "Zur Ernährungsberatung"
+    },
+    bewegung: {
+      title: "Walk & Talk",
+      sub: "Psychotherapie in Bewegung",
+      text: "Beim gemeinsamen Gehen in der Natur entstehen oft neue Gedanken und mehr Klarheit. Bewegung, frische Luft und Gespräch verbinden sich zu einer besonders wirksamen Form der Begleitung.",
+      link: "https://berit-weise.de/walk-talk",
+      linkText: "Mehr zu Walk & Talk"
+    },
+    soziales: {
+      title: "Systemische Arbeit",
+      sub: "Beziehungen & Zusammenhänge verstehen",
+      text: "Du lebst nicht isoliert, sondern in Beziehungen und Systemen. Mit systemischen Methoden machen wir diese Zusammenhänge sichtbar und eröffnen neue Perspektiven.",
+      link: "https://berit-weise.de/heilpraktikerin-fuer-psychotherapie",
+      linkText: "Mehr zu Psychotherapie"
+    },
+    sinn: {
+      title: "Lösungsorientierte Kurztherapie",
+      sub: "nach Steve de Shazer",
+      text: "Statt sich lange mit dem Problem aufzuhalten, schauen wir gemeinsam auf vorhandene Ressourcen und das, was schon funktioniert &mdash; ein kompakter Weg zu mehr Erfüllung und Ausgleich.",
+      link: "https://berit-weise.de/heilpraktikerin-fuer-psychotherapie",
+      linkText: "Mehr zu Psychotherapie"
+    }
+  };
+
+  // ---------- State ----------
+  const values = {};
+  areas.forEach(a => values[a.id] = 5);
+
+  const areasContainer = document.getElementById('areas-container');
+  const assessmentView = document.getElementById('assessment-view');
+  const resultView = document.getElementById('result-view');
+  const showResultBtn = document.getElementById('show-result-btn');
+  const restartBtn = document.getElementById('restart-btn');
+
+  // ---------- Render sliders ----------
+  function renderAreas(){
+    areasContainer.innerHTML = '';
+    areas.forEach(area => {
+      const block = document.createElement('div');
+      block.className = 'area-block';
+
+      block.innerHTML = `
+        <div class="area-header">
+          <p class="area-name sans">${area.name}</p>
+          <span class="area-value sans" id="value-${area.id}">${values[area.id]}</span>
+        </div>
+        <p class="area-desc sans">${area.desc}</p>
+        <input type="range" min="1" max="10" step="1" value="${values[area.id]}" id="slider-${area.id}">
+        <div class="scale-labels sans">
+          <span>1 &mdash; unzufrieden</span>
+          <span>10 &mdash; sehr zufrieden</span>
+        </div>
+      `;
+      areasContainer.appendChild(block);
+
+      const slider = block.querySelector(`#slider-${area.id}`);
+      const valueLabel = block.querySelector(`#value-${area.id}`);
+      slider.addEventListener('input', () => {
+        values[area.id] = parseInt(slider.value, 10);
+        valueLabel.textContent = values[area.id];
+      });
+    });
+  }
+  renderAreas();
+
+  // ---------- Radar chart drawing ----------
+  function drawRadarChart(){
+    const svg = document.getElementById('radar-chart');
+    svg.innerHTML = '';
+
+    const size = 320;
+    const center = size / 2;
+    const maxRadius = 120;
+    const levels = 5; // grid rings (2,4,6,8,10)
+    const n = areas.length;
+    const angleStep = (Math.PI * 2) / n;
+
+    function pointFor(index, value){
+      const angle = -Math.PI/2 + index * angleStep; // start at top
+      const r = (value / 10) * maxRadius;
+      return {
+        x: center + r * Math.cos(angle),
+        y: center + r * Math.sin(angle)
+      };
+    }
+
+    const ns = 'http://www.w3.org/2000/svg';
+
+    // grid rings
+    for(let lvl = 1; lvl <= levels; lvl++){
+      const ringValue = (10 / levels) * lvl;
+      let points = [];
+      for(let i = 0; i < n; i++){
+        const p = pointFor(i, ringValue);
+        points.push(p.x + ',' + p.y);
+      }
+      const poly = document.createElementNS(ns, 'polygon');
+      poly.setAttribute('points', points.join(' '));
+      poly.setAttribute('fill', 'none');
+      poly.setAttribute('stroke', '#E8DFCF');
+      poly.setAttribute('stroke-width', '1');
+      svg.appendChild(poly);
+    }
+
+    // axis lines + labels
+    areas.forEach((area, i) => {
+      const outer = pointFor(i, 10);
+      const line = document.createElementNS(ns, 'line');
+      line.setAttribute('x1', center);
+      line.setAttribute('y1', center);
+      line.setAttribute('x2', outer.x);
+      line.setAttribute('y2', outer.y);
+      line.setAttribute('stroke', '#E8DFCF');
+      line.setAttribute('stroke-width', '1');
+      svg.appendChild(line);
+
+      // label position slightly beyond outer point
+      const labelAngle = -Math.PI/2 + i * angleStep;
+      const labelR = maxRadius + 26;
+      const lx = center + labelR * Math.cos(labelAngle);
+      const ly = center + labelR * Math.sin(labelAngle);
+
+      const text = document.createElementNS(ns, 'text');
+      text.setAttribute('x', lx);
+      text.setAttribute('y', ly);
+      text.setAttribute('text-anchor', 'middle');
+      text.setAttribute('dominant-baseline', 'middle');
+      text.setAttribute('font-size', '11');
+      text.setAttribute('font-family', "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif");
+      text.setAttribute('fill', '#6E6258');
+      text.setAttribute('font-weight', '600');
+
+      // wrap long labels into two lines
+      const words = area.name.split(' ');
+      if(words.length > 1 && area.name.length > 12){
+        const mid = Math.ceil(words.length / 2);
+        const line1 = words.slice(0, mid).join(' ');
+        const line2 = words.slice(mid).join(' ');
+
+        const tspan1 = document.createElementNS(ns, 'tspan');
+        tspan1.setAttribute('x', lx);
+        tspan1.setAttribute('dy', '-0.4em');
+        tspan1.textContent = line1;
+        text.appendChild(tspan1);
+
+        const tspan2 = document.createElementNS(ns, 'tspan');
+        tspan2.setAttribute('x', lx);
+        tspan2.setAttribute('dy', '1.2em');
+        tspan2.textContent = line2;
+        text.appendChild(tspan2);
+      } else {
+        text.textContent = area.name;
+      }
+
+      svg.appendChild(text);
+    });
+
+    // reference polygon: "ausgewogenes" Lebensrad (konstant 8/10)
+    const REFERENCE_VALUE = 8;
+    let refPoints = [];
+    areas.forEach((area, i) => {
+      const p = pointFor(i, REFERENCE_VALUE);
+      refPoints.push(p);
+    });
+    const refPoly = document.createElementNS(ns, 'polygon');
+    refPoly.setAttribute('points', refPoints.map(p => p.x + ',' + p.y).join(' '));
+    refPoly.setAttribute('fill', 'none');
+    refPoly.setAttribute('stroke', '#5C7A5E');
+    refPoly.setAttribute('stroke-width', '2');
+    refPoly.setAttribute('stroke-dasharray', '6 5');
+    refPoly.setAttribute('stroke-linejoin', 'round');
+    refPoly.setAttribute('opacity', '0.7');
+    svg.appendChild(refPoly);
+
+    // data polygon
+    let dataPoints = [];
+    areas.forEach((area, i) => {
+      const p = pointFor(i, values[area.id]);
+      dataPoints.push(p);
+    });
+
+    const dataPoly = document.createElementNS(ns, 'polygon');
+    dataPoly.setAttribute('points', dataPoints.map(p => p.x + ',' + p.y).join(' '));
+    dataPoly.setAttribute('fill', 'rgba(199,151,63,0.25)');
+    dataPoly.setAttribute('stroke', '#C7973F');
+    dataPoly.setAttribute('stroke-width', '2.5');
+    dataPoly.setAttribute('stroke-linejoin', 'round');
+    svg.appendChild(dataPoly);
+
+    // data points (dots)
+    dataPoints.forEach(p => {
+      const circle = document.createElementNS(ns, 'circle');
+      circle.setAttribute('cx', p.x);
+      circle.setAttribute('cy', p.y);
+      circle.setAttribute('r', '4');
+      circle.setAttribute('fill', '#C7973F');
+      circle.setAttribute('stroke', '#fff');
+      circle.setAttribute('stroke-width', '1.5');
+      svg.appendChild(circle);
+    });
+  }
+
+  // ---------- Legend ----------
+  function renderLegend(){
+    const legend = document.getElementById('legend');
+    legend.innerHTML = '';
+    areas.forEach(area => {
+      const item = document.createElement('div');
+      item.className = 'legend-item';
+      item.innerHTML = `<span class="legend-dot"></span>${area.name}: <span class="legend-value">${values[area.id]}/10</span>`;
+      legend.appendChild(item);
+    });
+  }
+
+  // ---------- Result text ----------
+  function getResultText(avg, sorted){
+    const top = sorted[sorted.length - 1];
+    const low = sorted[0];
+
+    let lines = [];
+
+    if(avg >= 8){
+      lines.push('Dein Lebensrad zeigt insgesamt ein sehr stimmiges Bild &mdash; in vielen Bereichen fühlst du dich gut aufgestellt. Ein schöner Moment, um wertzuschätzen, was bereits gut läuft.');
+    } else if(avg >= 6){
+      lines.push('Insgesamt zeigt dein Lebensrad eine solide Basis. Manche Bereiche tragen dich gerade besonders, andere könnten etwas mehr Aufmerksamkeit gebrauchen.');
+    } else if(avg >= 4){
+      lines.push('Dein Lebensrad zeigt ein gemischtes Bild &mdash; einige Bereiche fühlen sich stabiler an als andere. Das ist ein guter Ausgangspunkt, um zu schauen, wo sich kleine Veränderungen am meisten lohnen würden.');
+    } else {
+      lines.push('Dein Lebensrad zeigt, dass aktuell mehrere Bereiche wenig Energie geben. Das ist ein deutliches Signal, dir bewusst Unterstützung und Raum für Veränderung zu gönnen.');
+    }
+
+    lines.push('Am stärksten bewertet hast du gerade <strong>' + areas.find(a=>a.id===top.id).name + '</strong> (' + top.value + '/10), am wenigsten <strong>' + areas.find(a=>a.id===low.id).name + '</strong> (' + low.value + '/10).');
+
+    return lines.join(' ');
+  }
+
+  // ---------- Recommendations ----------
+  function renderRecommendations(sorted){
+    // sortiere aufsteigend nach Wert -> niedrigste = größter Hebel
+    const lowestAreas = sorted.slice(0, 2); // 2 schwächste Bereiche
+
+    const recList = document.getElementById('rec-list');
+    recList.innerHTML = '';
+
+    lowestAreas.forEach((item, i) => {
+      const offer = offers[item.id];
+      const card = document.createElement('div');
+      card.className = 'rec-card' + (i === 0 ? ' primary' : '');
+
+      const rankLabel = i === 0 ? 'Größter Hebel gerade' : 'Könnte ebenfalls helfen';
+
+      card.innerHTML = `
+        <span class="rec-rank sans">${rankLabel}</span>
+        <p class="rec-title sans">${offer.title}</p>
+        <p class="rec-sub sans">${offer.sub}</p>
+        <p class="rec-text sans">${offer.text}</p>
+        <a class="rec-link sans" href="${offer.link}" target="_blank" rel="noopener">${offer.linkText} →</a>
+      `;
+      recList.appendChild(card);
+    });
+  }
+
+  // ---------- Show result ----------
+  showResultBtn.addEventListener('click', () => {
+    const sorted = areas
+      .map(a => ({ id: a.id, value: values[a.id] }))
+      .sort((a,b) => a.value - b.value);
+
+    const avg = areas.reduce((sum,a) => sum + values[a.id], 0) / areas.length;
+
+    drawRadarChart();
+    renderLegend();
+    document.getElementById('result-text').innerHTML = getResultText(avg, sorted);
+    renderRecommendations(sorted);
+
+    assessmentView.classList.add('hidden');
+    resultView.classList.remove('hidden');
+  });
+
+  restartBtn.addEventListener('click', () => {
+    areas.forEach(a => values[a.id] = 5);
+    renderAreas();
+    resultView.classList.add('hidden');
+    assessmentView.classList.remove('hidden');
+  });
+
+})();
+</script>
+
+</body>
+</html>

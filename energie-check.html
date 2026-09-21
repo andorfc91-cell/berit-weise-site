@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Energie-Check</title>
+<style>
+  :root{
+    --cream:#FBF6EE;
+    --paper:#FFFFFF;
+    --ink:#3A332B;
+    --ink-soft:#6E6258;
+    --gold:#C7973F;
+    --gold-soft:#EFDFC0;
+    --green:#5C7A5E;
+    --green-soft:#E3ECE2;
+    --line:#E8DFCF;
+    --radius:18px;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    font-family:'Iowan Old Style','Georgia',serif;
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .sans{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  }
+
+  .wrap{
+    max-width:560px;
+    margin:0 auto;
+    padding:32px 20px 48px;
+    position:relative;
+    min-height:100vh;
+  }
+
+  /* breathing circle */
+  .breath{
+    position:absolute;
+    top:18px;
+    right:18px;
+    width:54px;
+    height:54px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, var(--gold-soft), var(--gold) 80%);
+    opacity:0.55;
+    animation:breathe 6s ease-in-out infinite;
+    z-index:0;
+  }
+  @keyframes breathe{
+    0%,100%{ transform:scale(1); opacity:.45; }
+    50%{ transform:scale(1.35); opacity:.7; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .breath{ animation:none; }
+  }
+
+  header{
+    position:relative;
+    z-index:1;
+    padding-bottom:8px;
+  }
+
+  .eyebrow{
+    font-family:inherit;
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 10px;
+    font-weight:600;
+  }
+
+  h1{
+    font-size:30px;
+    line-height:1.25;
+    margin:0 0 10px;
+    font-weight:600;
+    max-width:80%;
+  }
+
+  .lede{
+    font-family:inherit;
+    color:var(--ink-soft);
+    font-size:16px;
+    line-height:1.6;
+    margin:0 0 28px;
+    max-width:46ch;
+  }
+
+  /* Card */
+  .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:28px 24px;
+    box-shadow:0 1px 2px rgba(58,51,43,0.03);
+    position:relative;
+    z-index:1;
+  }
+
+  /* progress */
+  .progress-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:22px;
+    font-family:inherit;
+  }
+  .progress-track{
+    flex:1;
+    height:5px;
+    border-radius:99px;
+    background:var(--line);
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:var(--gold);
+    border-radius:99px;
+    transition:width .45s ease;
+  }
+  .progress-label{
+    font-size:13px;
+    color:var(--ink-soft);
+    white-space:nowrap;
+    font-weight:500;
+  }
+
+  .question{
+    font-size:21px;
+    line-height:1.45;
+    font-weight:600;
+    margin:0 0 22px;
+  }
+
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .option{
+    font-family:inherit;
+    text-align:left;
+    font-size:15.5px;
+    line-height:1.4;
+    padding:14px 16px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--cream);
+    color:var(--ink);
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease, transform .1s ease;
+  }
+  .option:hover{
+    border-color:var(--gold);
+    background:var(--gold-soft);
+  }
+  .option:active{
+    transform:scale(.99);
+  }
+  .option:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:2px;
+  }
+  .option.selected{
+    border-color:var(--gold);
+    background:var(--gold-soft);
+    font-weight:600;
+  }
+
+  .nav-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:24px;
+  }
+
+  .btn{
+    font-family:inherit;
+    font-size:15px;
+    font-weight:600;
+    padding:11px 22px;
+    border-radius:99px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:opacity .15s ease, transform .1s ease;
+  }
+  .btn:active{ transform:scale(.98); }
+  .btn:disabled{ opacity:.35; cursor:not-allowed; }
+
+  .btn-primary{
+    background:var(--gold);
+    color:#fff;
+  }
+  .btn-primary:hover:not(:disabled){ opacity:.9; }
+
+  .btn-ghost{
+    background:transparent;
+    color:var(--ink-soft);
+    border-color:var(--line);
+  }
+  .btn-ghost:hover:not(:disabled){ border-color:var(--gold); color:var(--ink); }
+
+  /* Result */
+  .result{
+    text-align:left;
+  }
+  .result-eyebrow{
+    font-family:inherit;
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
+    margin:0 0 8px;
+  }
+  .result-title{
+    font-size:26px;
+    font-weight:600;
+    margin:0 0 14px;
+    line-height:1.3;
+  }
+  .meter{
+    height:10px;
+    border-radius:99px;
+    background:var(--line);
+    overflow:hidden;
+    margin-bottom:6px;
+  }
+  .meter-fill{
+    height:100%;
+    border-radius:99px;
+    transition:width .8s ease;
+  }
+  .meter-labels{
+    display:flex;
+    justify-content:space-between;
+    font-family:inherit;
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-bottom:24px;
+  }
+  .result-text{
+    font-family:inherit;
+    font-size:16px;
+    line-height:1.7;
+    color:var(--ink);
+    margin:0 0 22px;
+  }
+  .recommend{
+    background:var(--green-soft);
+    border-radius:14px;
+    padding:18px 20px;
+    margin-bottom:22px;
+  }
+  .recommend-label{
+    font-family:inherit;
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--green);
+    font-weight:700;
+    margin:0 0 8px;
+  }
+  .recommend-text{
+    font-family:inherit;
+    font-size:15.5px;
+    line-height:1.6;
+    margin:0 0 14px;
+    color:var(--ink);
+  }
+  .recommend a{
+    display:inline-block;
+    background:var(--green);
+    color:#fff;
+    text-decoration:none;
+    font-family:inherit;
+    font-weight:600;
+    font-size:14.5px;
+    padding:10px 20px;
+    border-radius:99px;
+  }
+  .recommend a:hover{ opacity:.9; }
+
+  .disclaimer{
+    font-family:inherit;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    line-height:1.6;
+    border-top:1px solid var(--line);
+    padding-top:16px;
+    margin-top:4px;
+  }
+
+  .restart{
+    margin-top:18px;
+    text-align:center;
+  }
+  .restart button{
+    background:none;
+    border:none;
+    font-family:inherit;
+    font-size:14px;
+    color:var(--ink-soft);
+    text-decoration:underline;
+    cursor:pointer;
+  }
+  .restart button:hover{ color:var(--gold); }
+
+  .hidden{ display:none !important; }
+</style>
+</head>
+<body>
+<nav style="background:rgba(255,253,248,.95);backdrop-filter:blur(16px);border-bottom:1px solid #e5dbca;position:sticky;top:0;z-index:100;height:64px;display:flex;align-items:center;padding:0 clamp(16px,4vw,48px);gap:1.5rem">
+  <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0">
+    <img src="symbol-gold.png" style="width:32px;height:32px;object-fit:contain" alt="">
+    <img src="logo-beritweise.png" style="height:26px;width:auto" alt="Berit Weise">
+  </a>
+  <span style="flex:1"></span>
+  <a href="index.html#tools" style="font:600 .88rem/1 Inter,sans-serif;color:#4f5f3f;text-decoration:none;padding:8px 16px;border-radius:999px;border:1px solid #d0c8b8;background:#fff;white-space:nowrap">← Alle Selbsttests</a>
+  <a href="kontakt.html" style="font:700 .88rem/1 Inter,sans-serif;color:#fff;text-decoration:none;padding:8px 18px;border-radius:999px;background:#a93b35;white-space:nowrap">Termin vereinbaren</a>
+</nav>
+
+<nav style="background:rgba(255,253,248,.95);backdrop-filter:blur(16px);border-bottom:1px solid #e5dbca;position:sticky;top:0;z-index:100;height:64px;display:flex;align-items:center;padding:0 clamp(16px,4vw,48px);gap:1.5rem">
+  <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0">
+    <img src="symbol-gold.png" style="width:32px;height:32px;object-fit:contain" alt="">
+    <img src="logo-beritweise.png" style="height:26px;width:auto" alt="Berit Weise">
+  </a>
+  <span style="flex:1"></span>
+  <a href="index.html#tools" style="font:600 .88rem/1 Inter,sans-serif;color:#4f5f3f;text-decoration:none;padding:8px 16px;border-radius:999px;border:1px solid #d0c8b8;background:#fff;white-space:nowrap">← Alle Selbsttests</a>
+  <a href="kontakt.html" style="font:700 .88rem/1 Inter,sans-serif;color:#fff;text-decoration:none;padding:8px 18px;border-radius:999px;background:#a93b35;white-space:nowrap">Termin vereinbaren</a>
+</nav>
+
+<div class="wrap">
+  <div class="breath" aria-hidden="true"></div>
+
+  <header>
+    <p class="eyebrow sans">Kleiner Energie-Check</p>
+    <h1>Wie viel Energie hast du gerade wirklich?</h1>
+    <p class="lede">8 kurze Fragen zu Schlaf, Bewegung, Ernährung und Stress &mdash; in zwei Minuten ein erstes Bild, wo du gerade stehst.</p>
+  </header>
+
+  <div class="card">
+
+    <!-- QUIZ VIEW -->
+    <div id="quiz-view">
+      <div class="progress-row">
+        <div class="progress-track">
+          <div class="progress-fill sans" id="progress-fill"></div>
+        </div>
+        <span class="progress-label sans" id="progress-label">Frage 1 von 8</span>
+      </div>
+
+      <p class="question" id="question-text"></p>
+
+      <div class="options" id="options-container"></div>
+
+      <div class="nav-row">
+        <button class="btn btn-ghost sans" id="back-btn">Zurück</button>
+        <button class="btn btn-primary sans" id="next-btn" disabled>Weiter</button>
+      </div>
+    </div>
+
+    <!-- RESULT VIEW -->
+    <div id="result-view" class="result hidden">
+      <p class="result-eyebrow sans">Dein Ergebnis</p>
+      <h2 class="result-title" id="result-title"></h2>
+
+      <div class="meter">
+        <div class="meter-fill" id="meter-fill"></div>
+      </div>
+      <div class="meter-labels sans">
+        <span>Erschöpft</span>
+        <span>Energiegeladen</span>
+      </div>
+
+      <p class="result-text" id="result-text"></p>
+
+      <div class="recommend">
+        <p class="recommend-label sans" id="recommend-label"></p>
+        <p class="recommend-text" id="recommend-text"></p>
+        <a id="recommend-link" href="#" target="_blank" rel="noopener" class="sans"></a>
+      </div>
+
+      <p class="disclaimer">
+        Dieser Check ersetzt keine medizinische oder psychotherapeutische Diagnose. Er gibt dir einen ersten, groben Eindruck &mdash; für ein wirklich individuelles Bild lohnt sich ein persönliches Gespräch.
+      </p>
+
+      <div class="restart">
+        <button class="sans" id="restart-btn">Test erneut starten</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+
+  const questions = [
+    {
+      text: "Wie fühlst du dich morgens, wenn du aufwachst?",
+      options: [
+        { label: "Ausgeruht und bereit für den Tag", score: 3 },
+        { label: "Geht so, ich brauche etwas Anlauf", score: 2 },
+        { label: "Müde, als hätte ich kaum geschlafen", score: 1 },
+        { label: "Erschöpft, am liebsten würde ich liegen bleiben", score: 0 }
+      ]
+    },
+    {
+      text: "Wie oft bewegst du dich an der frischen Luft (Spaziergang, Sport, Garten o.ä.)?",
+      options: [
+        { label: "Fast täglich", score: 3 },
+        { label: "Mehrmals pro Woche", score: 2 },
+        { label: "Selten, vielleicht einmal pro Woche", score: 1 },
+        { label: "So gut wie nie", score: 0 }
+      ]
+    },
+    {
+      text: "Wie würdest du dein Essverhalten im Alltag beschreiben?",
+      options: [
+        { label: "Bewusst, regelmäßig, mit viel frischen Zutaten", score: 3 },
+        { label: "Meist okay, aber oft schnell zwischendurch", score: 2 },
+        { label: "Häufig unregelmäßig oder unter Stress", score: 1 },
+        { label: "Eher chaotisch, viel Fertiges, wenig Pausen", score: 0 }
+      ]
+    },
+    {
+      text: "Wie oft fühlst du dich im Alltag gestresst oder unter Druck?",
+      options: [
+        { label: "Selten, ich fühle mich meist gelassen", score: 3 },
+        { label: "Ab und zu, aber im Rahmen", score: 2 },
+        { label: "Oft, es begleitet mich durch den Tag", score: 1 },
+        { label: "Fast ständig, ich komme kaum zur Ruhe", score: 0 }
+      ]
+    },
+    {
+      text: "Wie gut kannst du abends abschalten und zur Ruhe kommen?",
+      options: [
+        { label: "Sehr gut, ich finde leicht in den Feierabend", score: 3 },
+        { label: "Meistens klappt es", score: 2 },
+        { label: "Schwierig, die Gedanken kreisen oft weiter", score: 1 },
+        { label: "Kaum, ich bin innerlich oft noch im Alarm-Modus", score: 0 }
+      ]
+    },
+    {
+      text: "Wie zufrieden bist du aktuell mit deinem sozialen Austausch (Familie, Freunde, Gespräche)?",
+      options: [
+        { label: "Sehr zufrieden, ich fühle mich verbunden", score: 3 },
+        { label: "Größtenteils gut, könnte aber mehr sein", score: 2 },
+        { label: "Eher wenig, ich ziehe mich oft zurück", score: 1 },
+        { label: "Ich fühle mich oft allein mit den Dingen", score: 0 }
+      ]
+    },
+    {
+      text: "Wie reagiert dein Körper aktuell auf Belastung (Verspannungen, Kopfschmerzen, Magen etc.)?",
+      options: [
+        { label: "Kaum, mein Körper fühlt sich stabil an", score: 3 },
+        { label: "Gelegentlich kleine Beschwerden", score: 2 },
+        { label: "Regelmäßig, z. B. Verspannungen oder Unruhe", score: 1 },
+        { label: "Häufig, mein Körper sendet deutliche Signale", score: 0 }
+      ]
+    },
+    {
+      text: "Wenn du an die nächsten Wochen denkst &mdash; wie ist dein Gefühl?",
+      options: [
+        { label: "Vorfreude und Energie für das, was kommt", score: 3 },
+        { label: "Neutral, mal sehen", score: 2 },
+        { label: "Eher angespannt, vieles fühlt sich nach 'zu viel' an", score: 1 },
+        { label: "Schwer, ich wünschte mir einfach mehr Luft", score: 0 }
+      ]
+    }
+  ];
+
+  const results = [
+    {
+      max: 6,
+      title: "Deine Reserven sind gerade ziemlich leer.",
+      text: "Deine Antworten zeigen, dass du dich in vielen Bereichen erschöpft fühlst &mdash; Schlaf, Stress und Energie hängen oft eng zusammen und beeinflussen sich gegenseitig. Das ist kein Zeichen von Schwäche, sondern ein deutliches Signal deines Körpers, dass es Zeit für Veränderung und Unterstützung ist.",
+      meterColor: "var(--gold)",
+      meterPct: 18,
+      recommendLabel: "Ein guter erster Schritt",
+      recommendText: "Ein ruhiges, persönliches Gespräch kann helfen, herauszufinden, woran es liegt &mdash; und welche kleinen Veränderungen den größten Unterschied machen.",
+      recommendLink: "https://berit-weise.de/praxis",
+      recommendLinkText: "Termin für ein Erstgespräch anfragen"
+    },
+    {
+      max: 12,
+      title: "Du funktionierst &mdash; aber auf Reserve.",
+      text: "Es läuft, aber vieles kostet dich aktuell mehr Kraft, als gut für dich wäre. Stress, wenig Bewegung oder ein unruhiger Geist summieren sich über Wochen und Monate. Mit etwas mehr Struktur und Achtsamkeit könnte sich vieles leichter anfühlen.",
+      meterColor: "var(--gold)",
+      meterPct: 42,
+      recommendLabel: "Das könnte dir gut tun",
+      recommendText: "Walk & Talk verbindet Bewegung an der frischen Luft mit einem offenen Gespräch &mdash; ein sanfter Einstieg, um wieder mehr Raum für dich zu schaffen.",
+      recommendLink: "https://berit-weise.de/walk-talk",
+      recommendLinkText: "Mehr zu Walk & Talk"
+    },
+    {
+      max: 18,
+      title: "Du bist im Großen und Ganzen stabil &mdash; mit Luft nach oben.",
+      text: "Vieles läuft gut, einzelne Bereiche &mdash; vielleicht Ernährung, Schlaf oder der Umgang mit Stress &mdash; könnten dir aber noch mehr Leichtigkeit schenken. Schon kleine, gezielte Anpassungen können hier viel bewirken.",
+      meterColor: "var(--green)",
+      meterPct: 68,
+      recommendLabel: "Ein Bereich zum Weiterdenken",
+      recommendText: "Eine ganzheitliche Ernährungsberatung kann dir helfen, genau die Stellschrauben zu finden, die für mehr Energie im Alltag sorgen.",
+      recommendLink: "https://berit-weise.de/ganzheitliche-ernaehrungsberatung",
+      recommendLinkText: "Zur Ernährungsberatung"
+    },
+    {
+      max: 24,
+      title: "Du bewegst dich gerade in einer guten Balance.",
+      text: "Deine Antworten zeigen ein stabiles Fundament aus Schlaf, Bewegung, Ernährung und Stressregulation. Das ist eine wertvolle Basis &mdash; und ein guter Moment, um zu schauen, was dich langfristig stärkt und trägt.",
+      meterColor: "var(--green)",
+      meterPct: 92,
+      recommendLabel: "Für alle, die mehr wissen wollen",
+      recommendText: "Wenn du verstehen möchtest, wie ganzheitliche Gesundheit über den Alltag hinaus wirkt, lohnt sich ein genauerer Blick auf den ganzheitlichen Ansatz.",
+      recommendLink: "https://berit-weise.de/ganzheitliche-gesundheit",
+      recommendLinkText: "Mehr über ganzheitliche Gesundheit"
+    }
+  ];
+
+  let current = 0;
+  let answers = new Array(questions.length).fill(null);
+
+  const quizView = document.getElementById('quiz-view');
+  const resultView = document.getElementById('result-view');
+  const questionText = document.getElementById('question-text');
+  const optionsContainer = document.getElementById('options-container');
+  const progressFill = document.getElementById('progress-fill');
+  const progressLabel = document.getElementById('progress-label');
+  const backBtn = document.getElementById('back-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const restartBtn = document.getElementById('restart-btn');
+
+  function renderQuestion(){
+    const q = questions[current];
+    questionText.innerHTML = q.text;
+    optionsContainer.innerHTML = '';
+
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'option sans';
+      btn.type = 'button';
+      btn.textContent = opt.label;
+      if(answers[current] === i){ btn.classList.add('selected'); }
+      btn.addEventListener('click', () => {
+        answers[current] = i;
+        renderQuestion();
+      });
+      optionsContainer.appendChild(btn);
+    });
+
+    progressFill.style.width = ((current) / questions.length * 100) + '%';
+    progressLabel.textContent = 'Frage ' + (current+1) + ' von ' + questions.length;
+
+    backBtn.disabled = current === 0;
+    nextBtn.disabled = answers[current] === null;
+    nextBtn.textContent = current === questions.length - 1 ? 'Ergebnis ansehen' : 'Weiter';
+  }
+
+  function showResult(){
+    const total = answers.reduce((sum, ansIndex, qIndex) => {
+      return sum + questions[qIndex].options[ansIndex].score;
+    }, 0);
+
+    const result = results.find(r => total <= r.max);
+
+    document.getElementById('result-title').innerHTML = result.title;
+    document.getElementById('result-text').innerHTML = result.text;
+    document.getElementById('recommend-label').textContent = result.recommendLabel;
+    document.getElementById('recommend-text').innerHTML = result.recommendText;
+
+    const link = document.getElementById('recommend-link');
+    link.href = result.recommendLink;
+    link.textContent = result.recommendLinkText;
+
+    const meterFill = document.getElementById('meter-fill');
+    meterFill.style.background = result.meterColor;
+    // animate from 0
+    meterFill.style.width = '0%';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        meterFill.style.width = result.meterPct + '%';
+      });
+    });
+
+    progressFill.style.width = '100%';
+
+    quizView.classList.add('hidden');
+    resultView.classList.remove('hidden');
+  }
+
+  nextBtn.addEventListener('click', () => {
+    if(answers[current] === null) return;
+    if(current === questions.length - 1){
+      showResult();
+    } else {
+      current++;
+      renderQuestion();
+    }
+  });
+
+  backBtn.addEventListener('click', () => {
+    if(current > 0){
+      current--;
+      renderQuestion();
+    }
+  });
+
+  restartBtn.addEventListener('click', () => {
+    current = 0;
+    answers = new Array(questions.length).fill(null);
+    resultView.classList.add('hidden');
+    quizView.classList.remove('hidden');
+    renderQuestion();
+  });
+
+  renderQuestion();
+})();
+</script>
+
+</body>
+</html>
