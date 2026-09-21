@@ -370,16 +370,6 @@
   <a href="kontakt.html" style="font:700 .88rem/1 Inter,sans-serif;color:#fff;text-decoration:none;padding:8px 18px;border-radius:999px;background:#a93b35;white-space:nowrap">Termin vereinbaren</a>
 </nav>
 
-<nav style="background:rgba(255,253,248,.95);backdrop-filter:blur(16px);border-bottom:1px solid #e5dbca;position:sticky;top:0;z-index:100;height:64px;display:flex;align-items:center;padding:0 clamp(16px,4vw,48px);gap:1.5rem">
-  <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0">
-    <img src="symbol-gold.png" style="width:32px;height:32px;object-fit:contain" alt="">
-    <img src="logo-beritweise.png" style="height:26px;width:auto" alt="Berit Weise">
-  </a>
-  <span style="flex:1"></span>
-  <a href="index.html#tools" style="font:600 .88rem/1 Inter,sans-serif;color:#4f5f3f;text-decoration:none;padding:8px 16px;border-radius:999px;border:1px solid #d0c8b8;background:#fff;white-space:nowrap">← Alle Selbsttests</a>
-  <a href="kontakt.html" style="font:700 .88rem/1 Inter,sans-serif;color:#fff;text-decoration:none;padding:8px 18px;border-radius:999px;background:#a93b35;white-space:nowrap">Termin vereinbaren</a>
-</nav>
-
 <div class="wrap">
   <div class="breath" aria-hidden="true"></div>
 
@@ -482,42 +472,42 @@
       title: "Ganzheitliche Gesundheit",
       sub: "Körper, Geist und Seele als Einheit",
       text: "Wenn der Körper im Fokus steht, lohnt sich der Blick aufs große Ganze: Gemeinsam entwickeln wir Wege zu mehr Energie, Wohlbefinden und innerer Balance.",
-      link: "https://berit-weise.de/ganzheitliche-gesundheit",
+      link: "gesundheit.html",
       linkText: "Mehr über ganzheitliche Gesundheit"
     },
     psyche: {
       title: "Psychotherapie",
       sub: "EMDR, lösungsorientiert & systemisch",
       text: "Wenn die Psyche und Emotionen aktuell viel Raum einnehmen, kann ein persönliches Gespräch helfen, Klarheit zu gewinnen und neue Perspektiven zu entwickeln.",
-      link: "https://berit-weise.de/heilpraktikerin-fuer-psychotherapie",
+      link: "psychotherapie.html",
       linkText: "Mehr zu Psychotherapie"
     },
     ernaehrung: {
       title: "Ernährungsberatung",
       sub: "Für mehr Energie im Alltag",
       text: "Individuell, alltagstauglich und ganzheitlich begleitet &mdash; für mehr Energie, Wohlbefinden und Gesundheit durch eine Ernährung, die zu dir und deinem Alltag passt.",
-      link: "https://berit-weise.de/ganzheitliche-ernaehrungsberatung",
+      link: "gesundheit.html",
       linkText: "Zur Ernährungsberatung"
     },
     bewegung: {
       title: "Walk & Talk",
       sub: "Psychotherapie in Bewegung",
       text: "Beim gemeinsamen Gehen in der Natur entstehen oft neue Gedanken und mehr Klarheit. Bewegung, frische Luft und Gespräch verbinden sich zu einer besonders wirksamen Form der Begleitung.",
-      link: "https://berit-weise.de/walk-talk",
+      link: "walk-talk.html",
       linkText: "Mehr zu Walk & Talk"
     },
     soziales: {
       title: "Systemische Arbeit",
       sub: "Beziehungen & Zusammenhänge verstehen",
       text: "Du lebst nicht isoliert, sondern in Beziehungen und Systemen. Mit systemischen Methoden machen wir diese Zusammenhänge sichtbar und eröffnen neue Perspektiven.",
-      link: "https://berit-weise.de/heilpraktikerin-fuer-psychotherapie",
+      link: "psychotherapie.html",
       linkText: "Mehr zu Psychotherapie"
     },
     sinn: {
       title: "Lösungsorientierte Kurztherapie",
       sub: "nach Steve de Shazer",
       text: "Statt sich lange mit dem Problem aufzuhalten, schauen wir gemeinsam auf vorhandene Ressourcen und das, was schon funktioniert &mdash; ein kompakter Weg zu mehr Erfüllung und Ausgleich.",
-      link: "https://berit-weise.de/heilpraktikerin-fuer-psychotherapie",
+      link: "psychotherapie.html",
       linkText: "Mehr zu Psychotherapie"
     }
   };
@@ -754,7 +744,7 @@
         <p class="rec-title sans">${offer.title}</p>
         <p class="rec-sub sans">${offer.sub}</p>
         <p class="rec-text sans">${offer.text}</p>
-        <a class="rec-link sans" href="${offer.link}" target="_blank" rel="noopener">${offer.linkText} →</a>
+        <a class="rec-link sans" href="${offer.link}">${offer.linkText} →</a>
       `;
       recList.appendChild(card);
     });
