@@ -352,9 +352,15 @@
     <img src="logo-beritweise.png" style="height:26px;width:auto" alt="Berit Weise">
   </a>
   <span style="flex:1"></span>
-  <a href="index.html#tools" style="font:600 .88rem/1 Inter,sans-serif;color:#4f5f3f;text-decoration:none;padding:8px 16px;border-radius:999px;border:1px solid #d0c8b8;background:#fff;white-space:nowrap">← Alle Selbsttests</a>
-  <a href="kontakt.html" style="font:700 .88rem/1 Inter,sans-serif;color:#fff;text-decoration:none;padding:8px 18px;border-radius:999px;background:#a93b35;white-space:nowrap">Termin vereinbaren</a>
+  <a href="index.html#tools" class="quiz-nav-back" style="font:600 .88rem/1 Inter,sans-serif;color:#4f5f3f;text-decoration:none;padding:8px 16px;border-radius:999px;border:1px solid #d0c8b8;background:#fff;white-space:nowrap">← Alle Selbsttests</a>
+  <a href="kontakt.html" class="quiz-nav-cta" style="font:700 .88rem/1 Inter,sans-serif;color:#fff;text-decoration:none;padding:8px 18px;border-radius:999px;background:#a93b35;white-space:nowrap">Termin vereinbaren</a>
 </nav>
+<style>
+@media (max-width:480px){
+  .quiz-nav-back{display:none}
+  .quiz-nav-cta{padding:8px 12px !important;font-size:.8rem !important}
+}
+</style>
 
 <div class="wrap">
   <div class="breath" aria-hidden="true"></div>
