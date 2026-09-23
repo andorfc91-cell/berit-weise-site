@@ -92,6 +92,18 @@ header { position: sticky; top: 0; z-index: 50; background: rgba(255,253,248,.92
 /* ---- Sections ---- */
 section { padding: 80px 0 }
 
+/* ---- Scroll reveal ---- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease }
+.reveal.is-visible { opacity: 1; transform: none }
+.service-grid .reveal:nth-child(2), .tools-grid .reveal:nth-child(2), .trust-grid .reveal:nth-child(2), .steps .reveal:nth-child(2) { transition-delay: .08s }
+.service-grid .reveal:nth-child(3), .tools-grid .reveal:nth-child(3), .trust-grid .reveal:nth-child(3), .steps .reveal:nth-child(3) { transition-delay: .16s }
+.service-grid .reveal:nth-child(4), .tools-grid .reveal:nth-child(4), .trust-grid .reveal:nth-child(4) { transition-delay: .24s }
+.trust-grid .reveal:nth-child(5) { transition-delay: .32s }
+.trust-grid .reveal:nth-child(6) { transition-delay: .4s }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none }
+}
+
 /* ---- Check list ---- */
 .check { list-style: none; margin: 1rem 0; padding: 0; display: grid; gap: 10px }
 .check li { color: #2d2822; font-size: .95rem; position: relative; padding-left: 18px }
@@ -248,6 +260,7 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
 /* ---- Responsive ---- */
 @media(max-width:960px){
   .hero-grid{grid-template-columns:1fr;min-height:auto;padding:40px 0 60px}
+  .hero-img{order:-1;margin-bottom:1.6rem}
   .hero-img img{border-radius:20px;max-height:360px}
   .service-grid,.tools-grid{grid-template-columns:repeat(2,1fr)}
   .symptom-grid{grid-template-columns:repeat(3,1fr)}
@@ -329,7 +342,7 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
       <p class="kicker text-center">Vier Wege, die sich an deiner Lebenssituation orientieren – nicht an einem Schema.</p>
       <div class="service-grid">
 
-        <article class="card">
+        <article class="card reveal">
           <div class="pic"><img loading="lazy" src="berit-sitzung-steffi.jpg" alt="Therapeutisches Gespräch" style="object-position:50% 35%"></div>
           <div class="card-body">
             <div class="leaf-badge"><svg viewBox="0 0 24 24"><use href="#ico-heart"/></svg></div>
@@ -344,7 +357,7 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
           </div>
         </article>
 
-        <article class="card">
+        <article class="card reveal">
           <div class="pic"><img loading="lazy" src="systembrett.jpg" alt="Systembrett mit Figuren" style="object-position:50% 55%"></div>
           <div class="card-body">
             <div class="leaf-badge"><svg viewBox="0 0 24 24"><use href="#ico-feet"/></svg></div>
@@ -359,7 +372,7 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
           </div>
         </article>
 
-        <article class="card">
+        <article class="card reveal">
           <div class="pic"><img loading="lazy" src="walk-talk-spaziergang.jpg" alt="Berit Weise im Gespräch auf einem Spaziergang im Grünen" style="object-position:50% 25%"></div>
           <div class="card-body">
             <div class="leaf-badge"><svg viewBox="0 0 24 24"><use href="#ico-walk"/></svg></div>
@@ -374,7 +387,7 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
           </div>
         </article>
 
-        <article class="card">
+        <article class="card reveal">
           <div class="pic"><img loading="lazy" src="sitzecke-pflanze.jpg" alt="Praxisraum mit Pflanze" style="object-position:50% 20%"></div>
           <div class="card-body">
             <div class="leaf-badge"><svg viewBox="0 0 24 24"><use href="#ico-apple"/></svg></div>
@@ -415,25 +428,25 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
       <h2 class="text-center">Finde in wenigen Minuten heraus, wo du stehst</h2>
       <p class="kicker text-center">Vier kostenlose, anonyme Selbsttests – als erster Schritt, ganz ohne Verpflichtung.</p>
       <div class="tools-grid">
-        <a class="tool" href="energie-check.html">
+        <a class="tool reveal" href="energie-check.html">
           <div class="leaf-badge"><svg viewBox="0 0 24 24"><use href="#ico-shield"/></svg></div>
           <h3>Energie-Check</h3>
           <ul class="check"><li>8 Fragen zu Stress &amp; Energie – mit sofortiger Auswertung</li><li>Erkenne deine Erschöpfungsfallen</li><li>Erste Impulse für mehr Kraft</li></ul>
           <span class="more">Jetzt starten →</span>
         </a>
-        <a class="tool" href="lebensrad.html">
+        <a class="tool reveal" href="lebensrad.html">
           <div class="leaf-badge"><svg viewBox="0 0 24 24"><use href="#ico-leaf"/></svg></div>
           <h3>Lebensrad</h3>
           <ul class="check"><li>Sechs Lebensbereiche im Überblick</li><li>Wo gibt es Balance – wo fehlen Ressourcen?</li><li>Klarheit auf einen Blick</li></ul>
           <span class="more">Jetzt starten →</span>
         </a>
-        <a class="tool" href="passende-begleitung.html">
+        <a class="tool reveal" href="passende-begleitung.html">
           <div class="leaf-badge"><svg viewBox="0 0 24 24"><use href="#ico-person"/></svg></div>
           <h3>Welche Begleitung passt zu mir?</h3>
           <ul class="check"><li>Finde heraus, welche Unterstützung zu dir passt</li><li>Individuelle Empfehlung</li><li>Für mehr Klarheit bei deiner Wahl</li></ul>
           <span class="more">Jetzt starten →</span>
         </a>
-        <a class="tool" href="pausenoase.html">
+        <a class="tool reveal" href="pausenoase.html">
           <div class="leaf-badge"><svg viewBox="0 0 24 24"><use href="#ico-clock"/></svg></div>
           <h3>Pausenoase</h3>
           <ul class="check"><li>Geführte Atemübung für 2, 5 oder 10 Minuten</li><li>Kleine Auszeit zwischendurch</li><li>Für mehr Ruhe und Entspannung</li></ul>
@@ -447,7 +460,7 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
   <!-- ⑥ Über mich -->
   <section class="about-strip" id="ueber">
     <div class="container">
-      <div class="about-inner">
+      <div class="about-inner reveal">
         <img loading="lazy" src="berit-portrait-sessel.jpg" alt="Berit Weise im roten Sessel">
         <div class="about-text">
           <div class="eyebrow" style="color:#f1db89">Über mich</div>
@@ -474,17 +487,17 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
     <div class="container">
       <h2 class="text-center">So läuft unsere Zusammenarbeit ab</h2>
       <div class="steps">
-        <div class="step">
+        <div class="step reveal">
           <div class="leaf-badge"><svg viewBox="0 0 24 24"><use href="#ico-phone"/></svg></div>
           <strong>1. Kostenloses Telefonat</strong>
           <p>Wir klären kurz dein Anliegen und schauen, ob die Chemie stimmt – ganz unverbindlich.</p>
         </div>
-        <div class="step">
+        <div class="step reveal">
           <div class="leaf-badge"><svg viewBox="0 0 24 24"><use href="#ico-person"/></svg></div>
           <strong>2. Erstgespräch</strong>
           <p>In einem persönlichen Gespräch lernen wir uns kennen und besprechen gemeinsam deinen Weg.</p>
         </div>
-        <div class="step">
+        <div class="step reveal">
           <div class="leaf-badge"><svg viewBox="0 0 24 24"><use href="#ico-leaf"/></svg></div>
           <strong>3. Individuelle Begleitung</strong>
           <p>Gemeinsam arbeiten wir an deinen Zielen – in deinem Tempo, mit passenden Methoden.</p>
@@ -498,12 +511,12 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
     <div class="container">
       <h2 class="text-center">Darum fühlen sich meine Klienten gut aufgehoben</h2>
       <div class="trust-grid">
-        <div class="trust-box"><div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-clock"/></svg></div><div><b>Zeit statt Zeitdruck</b><p>Du stehst im Mittelpunkt.</p></div></div>
-        <div class="trust-box"><div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-shield"/></svg></div><div><b>Diskrete Atmosphäre</b><p>Vertrauen ist die Basis.</p></div></div>
-        <div class="trust-box"><div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-leaf"/></svg></div><div><b>Individuelle Lösungen</b><p>Keine Muster – sondern du.</p></div></div>
-        <div class="trust-box"><div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-heart"/></svg></div><div><b>Ganzheitlicher Ansatz</b><p>Körper, Geist &amp; Seele.</p></div></div>
-        <div class="trust-box"><div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-pin"/></svg></div><div><b>Praxis in Bobingen</b><p>Ruhig gelegen, gut erreichbar.</p></div></div>
-        <div class="trust-box"><div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-walk"/></svg></div><div><b>Flexible Termine</b><p>Nach Vereinbarung.</p></div></div>
+        <div class="trust-box reveal"><div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-clock"/></svg></div><div><b>Zeit statt Zeitdruck</b><p>Du stehst im Mittelpunkt.</p></div></div>
+        <div class="trust-box reveal"><div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-shield"/></svg></div><div><b>Diskrete Atmosphäre</b><p>Vertrauen ist die Basis.</p></div></div>
+        <div class="trust-box reveal"><div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-leaf"/></svg></div><div><b>Individuelle Lösungen</b><p>Keine Muster – sondern du.</p></div></div>
+        <div class="trust-box reveal"><div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-heart"/></svg></div><div><b>Ganzheitlicher Ansatz</b><p>Körper, Geist &amp; Seele.</p></div></div>
+        <div class="trust-box reveal"><div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-pin"/></svg></div><div><b>Praxis in Bobingen</b><p>Ruhig gelegen, gut erreichbar.</p></div></div>
+        <div class="trust-box reveal"><div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-walk"/></svg></div><div><b>Flexible Termine</b><p>Nach Vereinbarung.</p></div></div>
       </div>
     </div>
   </section>
@@ -511,7 +524,7 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
   <!-- ⑨ CTA -->
   <section class="cta-section">
     <div class="container">
-      <div class="cta-banner">
+      <div class="cta-banner reveal">
         <div class="cta-content">
           <h2>Deine Veränderung beginnt mit einem ersten Schritt.</h2>
           <p>Ruf mich an oder schreib mir – ich freue mich auf dich.</p>
@@ -609,6 +622,17 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
   }
   function hide(){overlays.forEach(function(o){o.div.remove();if(o.el){o.el.style.outline='';o.el.style.outlineOffset=''}});overlays=[]}
   document.addEventListener('keydown',function(e){if(e.shiftKey&&e.key==='D'){active=!active;active?show():hide()}});
+})();
+</script>
+<script>
+(function(){
+  if(!('IntersectionObserver' in window)){document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('is-visible')});return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target)}
+    });
+  },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 })();
 </script>
 <script>(function(){var u='hallo',d='berit-weise.de',e=u+'@'+d;document.querySelectorAll('.js-email').forEach(function(a){a.href='mailto:'+e;a.textContent=e;});document.querySelectorAll('.js-email-text').forEach(function(s){s.textContent=e;});})();</script>
