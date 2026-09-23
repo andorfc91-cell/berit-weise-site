@@ -95,7 +95,7 @@ section { padding: 80px 0 }
 /* ---- Scroll reveal ---- */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease }
 .reveal.is-visible { opacity: 1; transform: none }
-.service-grid .reveal:nth-child(2), .tools-grid .reveal:nth-child(2), .trust-grid .reveal:nth-child(2), .steps .reveal:nth-child(2) { transition-delay: .08s }
+.service-grid .reveal:nth-child(2), .tools-grid .reveal:nth-child(2), .trust-grid .reveal:nth-child(2), .steps .reveal:nth-child(2), .testimonial-grid .reveal:nth-child(2) { transition-delay: .08s }
 .service-grid .reveal:nth-child(3), .tools-grid .reveal:nth-child(3), .trust-grid .reveal:nth-child(3), .steps .reveal:nth-child(3) { transition-delay: .16s }
 .service-grid .reveal:nth-child(4), .tools-grid .reveal:nth-child(4), .trust-grid .reveal:nth-child(4) { transition-delay: .24s }
 .trust-grid .reveal:nth-child(5) { transition-delay: .32s }
@@ -255,6 +255,14 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
 .trust-box{background:#fff;padding:26px;display:flex;gap:14px}
 .trust-box b{display:block;margin-bottom:.25rem}
 .trust-box p{font-size:.88rem}
+/* ---- Testimonials ---- */
+.testimonials{background:#fbf8f2}
+.testimonial-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px}
+.testimonial-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:34px 32px;box-shadow:var(--shadow);margin:0;position:relative}
+.testimonial-quote{width:30px;height:30px;fill:var(--gold);opacity:.7;margin-bottom:14px}
+.testimonial-card blockquote{margin:0;font-family:Georgia,'Times New Roman',serif;font-size:1.12rem;line-height:1.6;color:#2d2822;font-style:italic}
+.testimonial-card figcaption{margin-top:16px;font-size:.9rem;font-weight:700;color:var(--sage-dark)}
+.testimonial-placeholder-tag{position:absolute;top:18px;right:18px;background:var(--red);color:#fff;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;padding:4px 10px;border-radius:999px}
 /* ---- CTA section ---- */
 .cta-section{background:var(--paper)}
 /* ---- Responsive ---- */
@@ -268,6 +276,7 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
   .steps{grid-template-columns:1fr}
   .about-inner{grid-template-columns:1fr}
   .about-inner img{max-height:280px}
+  .testimonial-grid{grid-template-columns:1fr}
 }
 @media(max-width:600px){
   .service-grid,.tools-grid,.symptom-grid{grid-template-columns:1fr}
@@ -517,6 +526,30 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
         <div class="trust-box reveal"><div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-heart"/></svg></div><div><b>Ganzheitlicher Ansatz</b><p>Körper, Geist &amp; Seele.</p></div></div>
         <div class="trust-box reveal"><div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-pin"/></svg></div><div><b>Praxis in Bobingen</b><p>Ruhig gelegen, gut erreichbar.</p></div></div>
         <div class="trust-box reveal"><div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-walk"/></svg></div><div><b>Flexible Termine</b><p>Nach Vereinbarung.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑧b Stimmen -->
+  <!-- PLATZHALTER: Die beiden Zitate + Namen unten sind Beispieltexte und müssen vor dem Live-Gang durch echte, freigegebene Klienten-Stimmen ersetzt werden. -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="eyebrow text-center">Stimmen</div>
+      <h2 class="text-center">Was Klient:innen berichten</h2>
+      <p class="kicker text-center">Platzhalter – wird durch echte, freigegebene Rückmeldungen ersetzt.</p>
+      <div class="testimonial-grid">
+        <figure class="testimonial-card reveal">
+          <span class="testimonial-placeholder-tag">Platzhalter</span>
+          <svg class="testimonial-quote" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7c-2.2 0-4 1.8-4 4v6h6v-6H6c0-1.1.9-2 2-2V7Zm10 0c-2.2 0-4 1.8-4 4v6h6v-6h-3c0-1.1.9-2 2-2V7Z"/></svg>
+          <blockquote>„Beispieltext: Ich habe mich von der ersten Minute an verstanden und ernst genommen gefühlt. Der ganzheitliche Blick hat mir geholfen, wieder klarer zu sehen.“</blockquote>
+          <figcaption>— Platzhaltername, Klient:in</figcaption>
+        </figure>
+        <figure class="testimonial-card reveal">
+          <span class="testimonial-placeholder-tag">Platzhalter</span>
+          <svg class="testimonial-quote" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7c-2.2 0-4 1.8-4 4v6h6v-6H6c0-1.1.9-2 2-2V7Zm10 0c-2.2 0-4 1.8-4 4v6h6v-6h-3c0-1.1.9-2 2-2V7Z"/></svg>
+          <blockquote>„Beispieltext: Die Gespräche haben mir Werkzeuge an die Hand gegeben, die ich bis heute im Alltag nutze. Sehr empfehlenswert.“</blockquote>
+          <figcaption>— Platzhaltername, Klient:in</figcaption>
+        </figure>
       </div>
     </div>
   </section>

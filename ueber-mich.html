@@ -92,6 +92,15 @@ header { position: sticky; top: 0; z-index: 50; background: rgba(255,253,248,.92
 /* ---- Sections ---- */
 section { padding: 80px 0 }
 
+/* ---- Scroll reveal ---- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease }
+.reveal.is-visible { opacity: 1; transform: none }
+.method-grid .reveal:nth-child(2), .two-col .reveal:nth-child(2) { transition-delay: .08s }
+.method-grid .reveal:nth-child(3) { transition-delay: .16s }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none }
+}
+
 /* ---- Check list ---- */
 .check { list-style: none; margin: 1rem 0; padding: 0; display: grid; gap: 10px }
 .check li { color: #2d2822; font-size: .95rem; position: relative; padding-left: 18px }
@@ -241,7 +250,7 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
 
   <section style="background:var(--paper)">
     <div class="container">
-      <div class="two-col" style="gap:60px">
+      <div class="two-col reveal" style="gap:60px">
         <div>
           <div class="eyebrow">Mein Weg</div>
           <h2>Wie ich zur Psychotherapie kam</h2>
@@ -263,32 +272,32 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
       <div class="eyebrow text-center">Ausbildung &amp; Qualifikationen</div>
       <h2 class="text-center">Was ich mitbringe</h2>
       <div class="method-grid" style="margin-top:36px">
-        <div class="method-card">
+        <div class="method-card reveal">
           <div class="leaf-badge"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5z"/></svg></div>
           <h3>Heilpraktikerin für Psychotherapie</h3>
           <p>Staatlich anerkannte Zulassung zur psychotherapeutischen Behandlung nach dem Heilpraktikergesetz.</p>
         </div>
-        <div class="method-card">
+        <div class="method-card reveal">
           <div class="leaf-badge"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 21s-7.3-4.6-10-9C.4 8.6 2 4 6 4c2.1 0 3.7 1.2 4.5 2.6C11.3 5.2 12.9 4 15 4c4 0 5.6 4.6 4 8-2.7 4.4-7 9-7 9z"/></svg></div>
           <h3>EMDR-Therapeutin</h3>
           <p>Ausgebildet in Eye Movement Desensitization and Reprocessing – einer wissenschaftlich anerkannten Methode zur Traumabehandlung.</p>
         </div>
-        <div class="method-card">
+        <div class="method-card reveal">
           <div class="leaf-badge"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M19.2 4.8C14 4.9 9 7.4 6.1 11.7c-1.8 2.7-2.1 5.1-2.1 5.1s2.4-.3 5.1-2.1C13.4 11.8 15.9 6.8 16 1.6l3.2 3.2Z"/></svg></div>
           <h3>Systemische Therapeutin</h3>
           <p>Ausbildung in systemischer Therapie und Beratung – mit dem Fokus auf Beziehungen, Kontext und Ressourcen.</p>
         </div>
-        <div class="method-card">
+        <div class="method-card reveal">
           <div class="leaf-badge"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8.2 4.4c3.5-1.2 7.4.6 8.6 4.1 1.3 3.8-.9 7.9-4.8 8.8l-.5 3.1-2.2-.4.7-4.8 1.1-.1c2.6-.3 4.3-2.9 3.4-5.4-.8-2.3-3.3-3.5-5.6-2.7L8.2 4.4Z"/></svg></div>
           <h3>Lösungsorientierte Kurztherapie</h3>
           <p>Ausbildung in lösungsfokussierten Ansätzen nach Steve de Shazer – effektiv, ressourcenorientiert, zukunftsfokussiert.</p>
         </div>
-        <div class="method-card">
+        <div class="method-card reveal">
           <div class="leaf-badge"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12.5 5c.3-1.5 1.5-2.5 3-2.5-.1 1.6-1.3 2.9-3 2.5zm-1 2c1.7-.3 3.4.3 4.6 1.5 2.2 2.2 2.2 6-.4 9.6-1 1.4-2.1 2.4-3.2 2.4s-1.6-.6-2.5-.6-1.6.6-2.6.6-2.4-1.2-3.5-2.9C1.9 14.4 2 10.3 4.6 8.2 6 7 7.7 6.6 9.3 7c.7.2 1.4.4 2.2 0z"/></svg></div>
           <h3>Ganzheitliche Gesundheitsberaterin</h3>
           <p>Verbindung von Ernährungswissen und psychischer Gesundheit – mit dem Blick auf den ganzen Menschen.</p>
         </div>
-        <div class="method-card">
+        <div class="method-card reveal">
           <div class="leaf-badge"><svg viewBox="0 0 24 24"><circle fill="currentColor" cx="12" cy="7" r="4"/><path fill="currentColor" d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
           <h3>Ehem. PTA</h3>
           <p>Langjährige Erfahrung als Pharmazeutisch-Technische Assistentin – die Grundlage meines medizinischen und ganzheitlichen Verständnisses.</p>
@@ -299,7 +308,7 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
 
   <section style="background:var(--paper)">
     <div class="container">
-      <div class="two-col">
+      <div class="two-col reveal">
         <div style="background:var(--sage);border-radius:var(--radius);padding:44px;color:#fff">
           <div class="eyebrow" style="color:#f1db89">Meine Werte</div>
           <h2 style="color:#fff;text-align:left;margin-bottom:1rem">Was mich antreibt</h2>
@@ -324,7 +333,7 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
 
   <section style="background:var(--paper)">
     <div class="container">
-      <div class="cta-banner">
+      <div class="cta-banner reveal">
         <div class="cta-content">
           <h2>Schön, dass du mehr über mich wissen wolltest.</h2>
           <p>Jetzt würde ich gerne mehr über dich erfahren.</p>
@@ -424,6 +433,17 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
 })();
 </script>
 <script>(function(){var u='hallo',d='berit-weise.de',e=u+'@'+d;document.querySelectorAll('.js-email').forEach(function(a){a.href='mailto:'+e;a.textContent=e;});document.querySelectorAll('.js-email-text').forEach(function(s){s.textContent=e;});})();</script>
+<script>
+(function(){
+  if(!('IntersectionObserver' in window)){document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('is-visible')});return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target)}
+    });
+  },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+})();
+</script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5e5427e247d64a1f91dc8dea2139e946"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

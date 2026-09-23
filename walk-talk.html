@@ -92,6 +92,15 @@ header { position: sticky; top: 0; z-index: 50; background: rgba(255,253,248,.92
 /* ---- Sections ---- */
 section { padding: 80px 0 }
 
+/* ---- Scroll reveal ---- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease }
+.reveal.is-visible { opacity: 1; transform: none }
+.method-grid .reveal:nth-child(2), .two-col .reveal:nth-child(2) { transition-delay: .08s }
+.method-grid .reveal:nth-child(3) { transition-delay: .16s }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none }
+}
+
 /* ---- Check list ---- */
 .check { list-style: none; margin: 1rem 0; padding: 0; display: grid; gap: 10px }
 .check li { color: #2d2822; font-size: .95rem; position: relative; padding-left: 18px }
@@ -247,24 +256,24 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
 
   <section class="page-topics" style="background:var(--paper)">
     <div class="container">
-      <div class="two-col">
+      <div class="two-col reveal">
         <div>
           <div class="eyebrow">Warum draußen?</div>
           <h2>Die Vorteile von Walk &amp; Talk</h2>
           <div class="feature-list" style="margin-top:1.5rem">
-            <div class="feature-item">
+            <div class="feature-item reveal">
               <div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-leaf"/></svg></div>
               <div><b>Natur wirkt regulierend</b><p>Bewegung und frische Luft senken Stresshormone und machen das Denken freier.</p></div>
             </div>
-            <div class="feature-item">
+            <div class="feature-item reveal">
               <div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-walk"/></svg></div>
               <div><b>Kein Gegenübersitzen</b><p>Das Nebeneinanderlaufen schafft eine andere Qualität von Gespräch – offener, weniger konfrontativ.</p></div>
             </div>
-            <div class="feature-item">
+            <div class="feature-item reveal">
               <div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-heart"/></svg></div>
               <div><b>Körper und Geist verbunden</b><p>Bewegung hilft dabei, Gedanken und Gefühle zu integrieren – nicht nur im Kopf zu bearbeiten.</p></div>
             </div>
-            <div class="feature-item">
+            <div class="feature-item reveal">
               <div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-shield"/></svg></div>
               <div><b>Niedrigschwelliger Einstieg</b><p>Für viele Menschen fühlt sich ein Spaziergang einfacher an als ein Termin in der Praxis.</p></div>
             </div>
@@ -288,7 +297,7 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
 
   <section style="background:var(--paper)">
     <div class="container">
-      <div class="cta-banner">
+      <div class="cta-banner reveal">
         <div class="cta-content">
           <h2>Einfach mal rausgehen und reden?</h2>
           <p>Meld dich – wir finden einen Weg und einen Ort, der passt.</p>
@@ -388,6 +397,17 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
 })();
 </script>
 <script>(function(){var u='hallo',d='berit-weise.de',e=u+'@'+d;document.querySelectorAll('.js-email').forEach(function(a){a.href='mailto:'+e;a.textContent=e;});document.querySelectorAll('.js-email-text').forEach(function(s){s.textContent=e;});})();</script>
+<script>
+(function(){
+  if(!('IntersectionObserver' in window)){document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('is-visible')});return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target)}
+    });
+  },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+})();
+</script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5e5427e247d64a1f91dc8dea2139e946"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

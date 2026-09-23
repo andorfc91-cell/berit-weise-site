@@ -92,6 +92,15 @@ header { position: sticky; top: 0; z-index: 50; background: rgba(255,253,248,.92
 /* ---- Sections ---- */
 section { padding: 80px 0 }
 
+/* ---- Scroll reveal ---- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease }
+.reveal.is-visible { opacity: 1; transform: none }
+.method-grid .reveal:nth-child(2), .two-col .reveal:nth-child(2) { transition-delay: .08s }
+.method-grid .reveal:nth-child(3) { transition-delay: .16s }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none }
+}
+
 /* ---- Check list ---- */
 .check { list-style: none; margin: 1rem 0; padding: 0; display: grid; gap: 10px }
 .check li { color: #2d2822; font-size: .95rem; position: relative; padding-left: 18px }
@@ -243,7 +252,7 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
 
   <section class="page-topics" style="background:var(--paper)">
     <div class="container">
-      <div class="two-col">
+      <div class="two-col reveal">
         <div>
           <div class="eyebrow">Für wen ist es geeignet?</div>
           <h2>Themen, bei denen ich begleite</h2>
@@ -274,17 +283,17 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
       <h2 class="text-center">Wie wir arbeiten</h2>
       <p class="kicker text-center">Ich kombiniere verschiedene anerkannte Methoden – je nachdem, was dir guttut.</p>
       <div class="method-grid">
-        <div class="method-card">
+        <div class="method-card reveal">
           <div class="leaf-badge"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5z"/></svg></div>
           <h3>EMDR</h3>
           <p>Eye Movement Desensitization and Reprocessing – eine wissenschaftlich belegte Methode zur Verarbeitung belastender Erlebnisse und Traumata.</p>
         </div>
-        <div class="method-card">
+        <div class="method-card reveal">
           <div class="leaf-badge"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 21s-7.3-4.6-10-9C.4 8.6 2 4 6 4c2.1 0 3.7 1.2 4.5 2.6C11.3 5.2 12.9 4 15 4c4 0 5.6 4.6 4 8-2.7 4.4-7 9-7 9z"/></svg></div>
           <h3>Systemische Therapie</h3>
           <p>Wir schauen nicht nur auf dich, sondern auch auf dein Umfeld – Familie, Beziehungen, Arbeit. Alles hängt zusammen.</p>
         </div>
-        <div class="method-card">
+        <div class="method-card reveal">
           <div class="leaf-badge"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M19.2 4.8C14 4.9 9 7.4 6.1 11.7c-1.8 2.7-2.1 5.1-2.1 5.1s2.4-.3 5.1-2.1C13.4 11.8 15.9 6.8 16 1.6l3.2 3.2Z"/></svg></div>
           <h3>Lösungsorientierte Kurztherapie</h3>
           <p>Statt im Problem zu verweilen, richtet diese Methode den Fokus auf Ressourcen und konkrete Schritte in Richtung Veränderung.</p>
@@ -295,24 +304,24 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
 
   <section class="page-process">
     <div class="container">
-      <div class="two-col">
+      <div class="two-col reveal">
         <div>
           <div class="eyebrow">Ablauf</div>
           <h2>Was dich erwartet</h2>
           <div class="feature-list" style="margin-top:1.5rem">
-            <div class="feature-item">
+            <div class="feature-item reveal">
               <div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-phone"/></svg></div>
               <div><b>Kostenloses Telefongespräch (15 Min.)</b><p>Wir klären kurz, ob ich der richtige Anlaufpunkt für dich bin.</p></div>
             </div>
-            <div class="feature-item">
+            <div class="feature-item reveal">
               <div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-person"/></svg></div>
               <div><b>Erstgespräch in der Praxis</b><p>Wir lernen uns kennen, du erzählst mir von dir – ohne Druck, in deinem Tempo.</p></div>
             </div>
-            <div class="feature-item">
+            <div class="feature-item reveal">
               <div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-leaf"/></svg></div>
               <div><b>Gemeinsame Therapieplanung</b><p>Wir besprechen, welche Methode und welcher Rhythmus zu dir passt.</p></div>
             </div>
-            <div class="feature-item">
+            <div class="feature-item reveal">
               <div class="mini-badge"><svg viewBox="0 0 24 24"><use href="#ico-shield"/></svg></div>
               <div><b>Laufende Begleitung</b><p>Regelmäßige Sitzungen – so lange, wie du sie brauchst.</p></div>
             </div>
@@ -330,7 +339,7 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
 
   <section style="background:var(--paper)">
     <div class="container">
-      <div class="cta-banner">
+      <div class="cta-banner reveal">
         <div class="cta-content">
           <h2>Bereit für den ersten Schritt?</h2>
           <p>Ein kurzes Telefonat genügt – ganz unverbindlich.</p>
@@ -430,6 +439,17 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
 })();
 </script>
 <script>(function(){var u='hallo',d='berit-weise.de',e=u+'@'+d;document.querySelectorAll('.js-email').forEach(function(a){a.href='mailto:'+e;a.textContent=e;});document.querySelectorAll('.js-email-text').forEach(function(s){s.textContent=e;});})();</script>
+<script>
+(function(){
+  if(!('IntersectionObserver' in window)){document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('is-visible')});return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target)}
+    });
+  },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+})();
+</script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5e5427e247d64a1f91dc8dea2139e946"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
