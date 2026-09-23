@@ -302,7 +302,7 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
       <div>
         <h4>Kontakt</h4>
         <a href="tel:+4982399845877">08234 – 99 84 58 7</a>
-        <a href="mailto:hallo@berit-weise.de">hallo@berit-weise.de</a>
+        <a href="#" class="js-email" aria-label="E-Mail an Berit Weise senden"></a>
       </div>
       <div>
         <h4>Praxis</h4>
@@ -368,6 +368,7 @@ footer { background: #f4efe7; border-top: 1px solid var(--line); padding: 52px 0
   document.addEventListener('keydown',function(e){if(e.shiftKey&&e.key==='D'){active=!active;active?show():hide()}});
 })();
 </script>
+<script>(function(){var u='hallo',d='berit-weise.de',e=u+'@'+d;document.querySelectorAll('.js-email').forEach(function(a){a.href='mailto:'+e;a.textContent=e;});document.querySelectorAll('.js-email-text').forEach(function(s){s.textContent=e;});})();</script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5e5427e247d64a1f91dc8dea2139e946"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
