@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://berit-weise.de/sitemap.xml
